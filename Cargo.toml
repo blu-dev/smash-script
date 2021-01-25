@@ -1,22 +1,10 @@
 [package]
-name = "skyline_rs_template"
+name = "smash_script"
 version = "0.1.0"
-authors = ["jam1garner <jam1.mcleod@hotmail.com>"]
+authors = ["blujay <the.blu.dev@gmail.com>"]
 edition = "2018"
 
-[package.metadata.skyline]
-titleid = "01006A800016E000"
-
-[lib]
-crate-type = ["cdylib"]
-
 [dependencies]
-skyline = { git = "https://github.com/ultimate-research/skyline-rs.git" }
-skyline_smash = { git = "https://github.com/ultimate-research/skyline-smash.git" }
-
-[profile.dev]
-panic = "abort"
-
-[profile.release]
-panic = "abort"
-lto = true
+skyline = { path = "../skyline-rs" }
+skyline_smash = { path = "../skyline-smash" }
+lua_macro = { path = "./lua-macro" }

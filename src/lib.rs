@@ -1,30 +1,20 @@
 #![feature(proc_macro_hygiene)]
+#![feature(asm)]
+#[macro_use]
+pub mod macros;
 
-use skyline::{hook, install_hook};
+pub use lua_macro::*;
+type ScriptBootstrapperFunc = unsafe fn(&mut smash::lua2cpp::L2CFighterCommon, &mut smash::lib::utility::Variadic);
 
-extern "C" fn test() -> u32 {
-    2
+#[macro_export]
+macro_rules! replace_scripts {
+    ($($func:ident),* $(,)?) => {
+        $(
+            $crate::replace_script!($func);
+        )*
+    };
 }
 
-#[hook(replace = test)]
-fn test_replacement() -> u32 {
-
-    let original_test = original!();
-
-    let val = original_test();
-
-    println!("[override] original value: {}", val); // 2
-
-    val + 1
-}
-
-#[skyline::main(name = "skyline_rs_template")]
-pub fn main() {
-    println!("Hello from Skyline Rust Plugin!");
-
-    install_hook!(test_replacement);
-
-    let x = test();
-
-    println!("[main] test returned: {}", x); // 3
+extern "Rust" {
+    pub fn replace_lua_script(fighter: &'static str, script: smash::phx::Hash40, func: ScriptBootstrapperFunc);
 }
