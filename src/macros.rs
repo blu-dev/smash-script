@@ -66,6 +66,14 @@ pub unsafe fn CATCH(fighter: &mut L2CFighterCommon, kind: i32, bone: Hash40, siz
     fighter.clear_lua_stack();
 }
 
+#[inline]
+pub unsafe fn FT_MOTION_RATE(fighter: &mut L2CFighterCommon, rate: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, rate);
+    sv_animcmd::FT_MOTION_RATE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
 #[macro_export]
 macro_rules! grab {
     ($fighter:ident, $($arg:expr),* $(,)?) => {
