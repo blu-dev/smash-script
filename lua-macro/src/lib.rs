@@ -6,7 +6,7 @@ use syn::{parenthesized, bracketed, token, Token};
 use proc_macro::TokenStream;
 use proc_macro2::TokenStream as TokenStream2;
 use quote::{quote, ToTokens};
-use std::io::Write;
+//use std::io::Write;
 
 struct ScriptAttrs {
     pub agent: syn::LitStr,
@@ -81,7 +81,7 @@ mod kw {
 impl syn::parse::Parse for ScriptAttrs {
     fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
         let look = input.lookahead1();
-        let mut agent: syn::LitStr = if look.peek(kw::agent) {
+        let agent: syn::LitStr = if look.peek(kw::agent) {
             let MetaItem::<kw::agent, syn::LitStr> { item: string, .. } = input.parse()?;
             
             string
@@ -93,7 +93,7 @@ impl syn::parse::Parse for ScriptAttrs {
         let look = input.lookahead1();
 
         
-        let mut scripts: Vec<syn::LitStr> = if look.peek(kw::script) {
+        let scripts: Vec<syn::LitStr> = if look.peek(kw::script) {
             let MetaItem::<kw::script, syn::LitStr> { item: string, .. } = input.parse()?;
             
             vec![string]

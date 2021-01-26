@@ -1,10 +1,10 @@
+#![allow(non_snake_case)]
 use smash::lib::L2CValue;
 use smash::lua2cpp::L2CFighterCommon;
 use smash::phx::Hash40;
 
 use smash::app::sv_animcmd;
-use smash::app::sv_module_access;
-use smash::app::sv_battle_object;
+use smash::lib::lua_const::*;
 
 #[macro_export]
 macro_rules! lua_args {
@@ -24,9 +24,8 @@ pub unsafe fn ATTACK(fighter: &mut L2CFighterCommon, id: u64, part: u64, bone: H
     if let Some(x2) = x2 { lua_args!(fighter, x2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(y2) = y2 { lua_args!(fighter, y2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(z2) = z2 { lua_args!(fighter, z2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
-    lua_args!(fighter, hitlag, sdi, clang, facing, set_weight, shield_damage, trip, rehit, absorbable, flinchless, disable_hitlag, direct, ground_air, hitbits, collision_part, friendly_fire, effect, sfx_level, collision_sound, _type);
+    lua_args!(fighter, hitlag, sdi, clang, facing, set_weight, shield_damage, trip, rehit, reflectable, absorbable, flinchless, disable_hitlag, direct, ground_air, hitbits, collision_part, friendly_fire, effect, sfx_level, collision_sound, _type);
     sv_animcmd::ATTACK(fighter.lua_state_agent);
-    fighter.clear_lua_stack();
 }
 
 #[inline]
@@ -35,7 +34,6 @@ pub unsafe fn ATTACK_ABS(fighter: &mut L2CFighterCommon, kind: i32, id: u64, dam
     fighter.clear_lua_stack();
     lua_args!(fighter, kind, id, damage, angle, kbg, fkb, bkb, hitlag, unk, facing, unk2, unk3, effect, sfx_level, sfx_type, _type);
     sv_animcmd::ATTACK_ABS(fighter.lua_state_agent);
-    fighter.clear_lua_stack();
 }
 
 #[inline]
@@ -43,7 +41,6 @@ pub unsafe fn ATK_HIT_ABS(fighter: &mut L2CFighterCommon, kind: i32, unk: Hash40
     fighter.clear_lua_stack();
     lua_args!(fighter, kind, unk, target, target_group, target_no);
     sv_animcmd::ATK_HIT_ABS(fighter.lua_state_agent);
-    fighter.clear_lua_stack();
 }
 
 #[inline]
@@ -63,7 +60,6 @@ pub unsafe fn CATCH(fighter: &mut L2CFighterCommon, id: i32, bone: Hash40, size:
     if let Some(z2) = z2 { lua_args!(fighter, z2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     lua_args!(fighter, status, situation);
     sv_animcmd::CATCH(fighter.lua_state_agent);
-    fighter.clear_lua_stack();
 }
 
 #[inline]
@@ -90,7 +86,6 @@ macro_rules! grab {
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::grab($fighter.lua_state_agent);
         let ret = $fighter.pop_lua_stack(1).get_bool();
-        $fighter.clear_lua_stack();
         ret
     };
 }
@@ -102,7 +97,13 @@ macro_rules! notify_event_msc_cmd {
         lua_args!($fighter, $($arg),*);
         smash::app::sv_battle_object::notify_event_msc_cmd($fighter.lua_state_agent);
         let ret = $fighter.pop_lua_stack(1).get_int();
-        $fighter.clear_lua_stack();
         ret
     }
+}
+
+#[inline]
+pub unsafe fn game_CaptureCutCommon(fighter: &mut L2CFighterCommon) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+    sv_animcmd::ATTACK_ABS(fighter.lua_state_agent);
 }
