@@ -5,6 +5,6 @@ authors = ["blujay <the.blu.dev@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-skyline = { hit = "https://github.com/ultimate-research/skyline-rs" }
-skyline-smash = { hit = "https://github.com/ultimate-research/skyline-smash" }
+skyline = { git = "https://github.com/ultimate-research/skyline-rs" }
+skyline-smash = { git = "https://github.com/ultimate-research/skyline-smash" }
 lua_macro = { path = "./lua-macro" }
