@@ -94,6 +94,15 @@ pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter: &mut L2CFighterCommon, unk
     sv_animcmd::ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
+
+#[inline]
+pub unsafe fn QUAKE(fighter: &mut L2CFighterCommon, kind: i32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, kind);
+    sv_animcmd::QUAKE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
 #[macro_export]
 macro_rules! grab {
     ($fighter:ident, $($arg:expr),* $(,)?) => {
