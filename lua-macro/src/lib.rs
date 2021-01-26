@@ -125,6 +125,102 @@ pub fn replace_script(input: TokenStream) -> TokenStream {
     ).into()
 }
 
+#[proc_macro]
+pub fn replace_fighter_frame(input: TokenStream) -> TokenStream {
+    let ident = syn::parse_macro_input!(input as syn::Ident);
+    let installer_name = quote::format_ident!("_lua_replace_sys_line_fighter_install_{}", ident);
+    quote!(
+        unsafe { #installer_name(); }
+    ).into()
+}
+
+#[proc_macro]
+pub fn replace_weapon_frame(input: TokenStream) -> TokenStream {
+    let ident = syn::parse_macro_input!(input as syn::Ident);
+    let installer_name = quote::format_ident!("_lua_replace_sys_line_weapon_install_{}", ident);
+    quote!(
+        unsafe { #installer_name(); }
+    ).into()
+}
+
+struct SysLineAttrs {
+    pub agent: syn::Path
+}
+
+impl syn::parse::Parse for SysLineAttrs {
+    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+        if input.peek(kw::agent) {
+            let MetaItem::<kw::agent, syn::Path> { item: kind, .. } = input.parse()?;
+
+            Ok(Self { agent: kind })
+        } else {
+            Err(input.error("no agent token found"))
+        }
+    }
+}
+
+#[proc_macro_attribute]
+pub fn fighter_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
+    let attrs = syn::parse_macro_input!(attr as SysLineAttrs);
+    let item_clone = item.clone();
+    let mut usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
+
+    let _agent = attrs.agent;
+    let usr_fn_name = &usr_fn.sig.ident;
+
+    let _orig_fn = usr_fn.block.to_token_stream();
+    let replace_name = quote::format_ident!("_lua_replace_sys_line_fighter_replace_{}", usr_fn_name);
+    let install_name = quote::format_ident!("_lua_replace_sys_line_fighter_install_{}", usr_fn_name);
+
+    let mut output = TokenStream2::from(item_clone);
+
+    quote!(
+        #[allow(unused_unsafe)]
+        pub unsafe extern "C" fn #replace_name(fighter: &mut L2CFighterCommon) -> smash::lib::L2CValue {
+            #usr_fn_name(fighter);
+
+            smash::lua2cpp::L2CFighterCommon_sys_line_system_control_fighter(fighter)
+        }
+
+        unsafe fn #install_name() {
+            smash_script::replace_sys_line_fighter_script(#_agent, #replace_name);
+        }
+    ).to_tokens(&mut output);
+
+    output.into()
+}
+
+#[proc_macro_attribute]
+pub fn weapon_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
+    let attrs = syn::parse_macro_input!(attr as SysLineAttrs);
+    let item_clone = item.clone();
+    let mut usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
+
+    let _agent = attrs.agent;
+    let usr_fn_name = &usr_fn.sig.ident;
+
+    let _orig_fn = usr_fn.block.to_token_stream();
+    let replace_name = quote::format_ident!("_lua_replace_sys_line_weapon_replace_{}", usr_fn_name);
+    let install_name = quote::format_ident!("_lua_replace_sys_line_weapon_install_{}", usr_fn_name);
+
+    let mut output = TokenStream2::from(item_clone);
+
+    quote!(
+        #[allow(unused_unsafe)]
+        pub unsafe extern "C" fn #replace_name(fighter: &mut L2CFighterBase) -> smash::lib::L2CValue {
+            #usr_fn_name(fighter);
+
+            smash::lua2cpp::L2CFighterBase_sys_line_control_system(fighter) // call original C function just because /shrug
+        }
+
+        unsafe fn #install_name() {
+            smash_script::replace_sys_line_weapon_script(#_agent, #replace_name);
+        }
+    ).to_tokens(&mut output);
+
+    output.into()
+}
+
 #[proc_macro_attribute]
 pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
     let attr = syn::parse_macro_input!(attr as ScriptAttrs);
@@ -177,7 +273,7 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
 
         #[inline(never)]
         #[allow(unused_unsafe)]
-        unsafe fn #bootstrapper_name(fighter: &mut smash::lua2cpp::L2CFighterCommon, variadic: &mut smash::lib::utility::Variadic) {
+        unsafe extern "C" fn #bootstrapper_name(fighter: &mut smash::lua2cpp::L2CFighterCommon, variadic: &mut smash::lib::utility::Variadic) {
             let format = variadic.get_format();
             let mut value = smash::lib::L2CValue::new();
             if format == 0 as *const skyline::libc::c_char {

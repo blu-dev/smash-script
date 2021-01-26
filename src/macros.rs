@@ -55,9 +55,9 @@ pub unsafe fn is_excute(fighter: &mut L2CFighterCommon) -> bool {
 }
 
 #[inline]
-pub unsafe fn CATCH(fighter: &mut L2CFighterCommon, kind: i32, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, status: i32, situation: i32) {
+pub unsafe fn CATCH(fighter: &mut L2CFighterCommon, id: i32, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, status: i32, situation: i32) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, kind, bone, size, x, y, z);
+    lua_args!(fighter, id, bone, size, x, y, z);
     if let Some(x2) = x2 { lua_args!(fighter, x2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(y2) = y2 { lua_args!(fighter, y2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(z2) = z2 { lua_args!(fighter, z2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
@@ -72,6 +72,15 @@ pub unsafe fn FT_MOTION_RATE(fighter: &mut L2CFighterCommon, rate: f32) {
     lua_args!(fighter, rate);
     sv_animcmd::FT_MOTION_RATE(fighter.lua_state_agent);
     fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CFighterCommon, article: i32) -> bool {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, article);
+    let ret = sv_animcmd::IS_GENERATABLE_ARTICLE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+    ret
 }
 
 #[macro_export]
