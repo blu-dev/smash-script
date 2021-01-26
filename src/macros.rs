@@ -79,6 +79,14 @@ pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CFighterCommon, article: i3
     ret
 }
 
+#[inline]
+pub unsafe fn HIT_NO(fighter: &mut L2CFighterCommon, num: u64, status: i32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, num, status);
+    sv_animcmd::HIT_NO(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
 #[macro_export]
 macro_rules! grab {
     ($fighter:ident, $($arg:expr),* $(,)?) => {
