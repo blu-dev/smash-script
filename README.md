@@ -1,96 +1,132 @@
-# skyline-rs-template
+# `smash-script` and `lua-replace`
+The `smash_script` crates is designed to utilize and work with the `liblua_replace.nro` dependency. It reimplements everything that `skyline-acmd` and `libacmd_hook.nro` do in much more efficient ways.
 
-A template for writing skyline plugins for modding switch games using Rust and skyline-rs.
+## Dependencies
+The development of this tool required updating and changes to both `skyline` (`subsdk9`) and `nro-hook-plugin` (`libnro_hook.nro`). These will need to be updated, along with the installation of `liblua_replace.nro`, which can be found at https://github.com/blu-dev/lua-replace
 
-[Documentation for skyline-rs](https://ultimate-research.github.io/skyline-rs-template/doc/skyline/index.html)
+## Replacement
+Script replacement is done via the use of the `#[script(...)]` attribute and currently only supports fighters and weapons. Other types of scripts the game handles
+(namely item scripts) are not yet implemented but are planned for future releases.
 
-## Setup
+## Usage
+Unlike `libacmd_hook` and `skyline-acmd`, the `smash-script` create does not support the use of the `acmd!` macro to generate valid replacement scripts. For more information on why, check the technical information.
 
-### Local
+### ACMD (AnimCMD) Scripts
+Replacing scripts works for all of the animcmd script types: `game` (attack), `effect`, `sound`, and `expression` (misc.). A script can be created as follows:
+```rs
+use smash_script::script;
+use smash_script::macros;
+use smash::lua2cpp::L2CFighterCommon;
+use smash::app::sv_animcmd;
+use smash::lib::lua_const::*;
+use smash::app::lua_bind::*;
 
-#### Prerequisites
+#[script( agent = "mariod", scripts = [ "game_specialn", "game_specialairn" ])]
+fn double_pill(fighter: &mut L2CFighterCommon) {
+    let lua_state = fighter.lua_state_agent;
+    let boma = smash::app::sv_system::battle_object_module_accessor(lua_state);
+    println!("starting custom script!");
+    sv_animcmd::frame(lua_state, 12.0);
+    if macros::is_excute(fighter) {
+        println!("running custom script!");
+        ArticleModule::generate_article(boma, *FIGHTER_MARIOD_GENERATE_ARTICLE_DRCAPSULE, false, -1);
+    }
+    sv_animcmd::frame(lua_state, 20.0);
+    if macros::is_excute(fighter) && ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) {
+        ArticleModule::generate_article(boma, *FIGHTER_MARIOD_GENERATE_ARTICLE_DRCAPSULE, false, -1);
+    }
+}
 
-* [Rust](https://www.rust-lang.org/install.html) - make sure rustup, cargo, and rustc (preferrably nightly) are installed.
-* [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+/* Rest of the plugin goes here */
 
-Install [cargo skyline](https://github.com/jam1garner/cargo-skyline).
-```bash
-# inside a folder where you will dev all of your plugins going forward
-cargo install cargo-skyline
-cargo skyline new [your_plugin_name]
+pub fn install() {
+    smash_script::replace_scripts!(double_pill);
+}
 ```
 
-### VS Code with Docker
+Let's break down the above script. The `script` macro attribute takes two attributes: `agent` and `script(s)`.
+* `agent` is supposed to be the name of the fighter or article which will be using this script. In the above example, this agent is `"mariod"`, or Dr. Mario. It also works for weapons, so `agent = "mariod_drcapsule"` would mean that we are replacing a script (or scripts) for Dr. Mario's capsule weapon.
+* `script` is used for replacing a single script. It takes the name of the script (if you are familiar with `skyline-acmd`, this is the `animcmd` attribute). It's sibling attribute, `scripts`, is the same but instead takes an array of script names which it should replace. All of them get installed with the same call, and it is designed to ease replacing multiple scripts which appear to be the same (or need to be the same for a mod).
 
-#### Prerequisites
+If you are familiar with `skyline-acmd`, you might be confused at something: why do I use a `println!` macro at the beginning of the function? Won't that print every frame? The short answer is: no. These scripts, just like vanilla, run **once**. This means you can use as many local variables as you want without fear of them getting replaced or reinitialized each frame.
+#### "There be dragons" - A note about using local variables
+Due to the way exception handling and stack unwinding was implemented, local variables are *usable*, but I would strongly advocate not using local variables which allocate dynamic memory (heap) on creation and free it on their destruction (or drop), as these methods will never get called should the script be interrupted. 
 
-* [Docker](https://www.docker.com/get-started)
-* [Visual Studio Code](https://code.visualstudio.com/)
-* [Visual Studio Code Remote Development Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-* Copy [these files](https://gist.github.com/jugeeya/ebdf699e3dc442dc1706e4ee6587b86f) to a new directory called `.devcontainer` after cloning this repo.
+### Once-per-frame Scripts
+Another great feature of `acmd_hook` which has been reimplemented in `lua-replace` is that of once-per-frame fighter and weapon callbacks. There is a downside, though, which is that you have to match the fighter kind in *every single callback* that you use. These have been reimplemented to use a macro attribute and now directly replace the fighter's own system control function. The original function is still called immediately after the user's replace, just like `acmd_hook`.
 
-Simply run `Remote Containers: Reopen in Container` in the Command Palette. 
+Making a fighter/weapon specific once-per-frame hook is as simple as the following:
+```rs
+use smash_script::{ fighter_frame, weapon_frame };
 
-## Creating and building a plugin
+#[fighter_frame( agent = FIGHTER_KIND_MARIOD )]
+unsafe fn dr_mario_frame(fighter: &mut L2CFighterCommon) {
+    let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
+    let kind = smash::app::utility::get_kind(boma);
+    println!("Calling once-per-frame with Dr. Mario: {:X}", kind);
+}
 
-To compile your plugin use the following command in the root of the project (beside the `Cargo.toml` file):
-```sh
-cargo skyline build
-```
-Your resulting plugin will be the `.nro` found in the folder
-```
-[plugin name]/target/aarch64-skyline-switch
-```
-To install (you must already have skyline installed on your switch), put the plugin on your SD at:
-```
-sd:/atmosphere/contents/[title id]/romfs/skyline/plugins
-```
-So, for example, smash plugins go in the following folder:
-```
-sd:/atmosphere/contents/01006A800016E000/romfs/skyline/plugins
-```
+#[weapon_frame( agent = WEAPON_KIND_MARIOD_DRCAPSULE )]
+unsafe fn capsule_frame(fighter: &mut L2CFighterBase) {
+    let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
+    let kind = smash::app::utility::get_kind(boma);
+    println!("Calling once-per-frame with Dr. Mario\'s Capsule: {:X}", kind);
+}
 
-`cargo skyline` can also automate some of this process via FTP. If you have an FTP client on your Switch, you can run:
-```sh
-cargo skyline set-ip [Switch IP]
-# install to the correct plugin folder on the Switch and listen for logs
-cargo skyline run 
-```
+unsafe fn global_fighter_frame(fighter: &mut L2CFighterCommon) {
+    // global fighter mods here
+}
 
-## Troubleshooting
+unsafe fn global_weapon_frame(fighter: &mut L2CFighterBase) {
+    // global weapon mods here
+}
 
-**"Cannot be used on stable"**
+/* Rest of plugin goes here */
 
-First, make sure you have a nightly installed:
-```
-rustup install nightly
-```
-Second, make sure it is your default channel:
-```
-rustup default nightly
-```
----
-```
-thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src/bin/cargo-nro.rs:280:13
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+pub fn install() {
+    smash_script::replace_fighter_frames!(dr_mario_frame);
+    smash_script::replace_weapon_frames!(capsule_frame);
+    smash_script::add_fighter_frame_callbacks!(global_fighter_frame);
+    smash_script::add_weapon_frame_callbacks!(global_weapon_frame);
+}
 ```
 
-Make sure you are *inside* the root of the plugin you created before running `cargo skyline build`
-
-Have a problem/solution that is missing here? Create an issue or a PR!
-
-## Updating
-
-For updating your dependencies such as skyline-rs:
-
+The output of the above plugin while playing as Dr. Mario with any other fighters/weapons would be the following
 ```
-cargo update
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario's Capsule: D7
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario's Capsule: D7
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario's Capsule: D7
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario's Capsule: D7
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario's Capsule: D7
+Calling once-per-frame with Dr. Mario: 12
+Calling once-per-frame with Dr. Mario's Capsule: D7
 ```
 
-For updating your version of `rust-std-skyline-squashed`:
+You can only replace the once-per-frame script **once** (this also goes for regular AnimCMD script replacements). Any additional logic that needs to be separated should continue to use global callbacks, which work separately from once-per-frame script replacments. You can have as many global callbacks as you would like, but only one replacement script per fighter/weapon.
 
-```
-# From inside your plugins folder
+## Technical Information
+### Runtime complexity and performance increases
+Currently, `acmd_hook` searches a vector which contains every single hook installed on every frame for every fighter. This is an O(n) complexity multiple times each frame during a match. While not an issue for smaller mods, larger mods that aim to reimplement or change the majority of fighters and scripts in the game begin to have noticeable performance dips when introducing more than 2 fighters to the screen.
 
-cargo skyline self-update
-```
+`lua-replace` also has an O(n) complexity, however the performance is essentially identical to vanilla. During the match loading sequence, `lua-replace` checks the fighters being loaded (as well as the articles) and replaces their script with a sequential search of a function vector. Should this be an issue due to timing, this can be reworked to be faster but it shouldn't make a large difference. During the actual battle, if a script runs to completion there should be no difference in execution. If it gets interrupted, there might be a small difference in execution and timing, but it should be negligble. In total, the performance benefits will become more noticable the more mods you add to the game.
+### Compatibility with `acmd_hook` script edits
+`acmd_hook` hooks will be compatible, however currently two functions in the game get replaced by both plugins. It is unknown what will happen in this instance. Should this not be a problem, any `acmd_hook` script edits will take priority over `lua-replace` script replacements due to the nature of both plugins.
+### Notable bugs from `skyline-acmd` that are no longer present
+* Frame 1 modifications are now fully functional and can be expected to work 100% of the time, since we are as close to the original game's process as possible.
+* The notorious `is_excute` bug no longer exists. This wasn't really a "bug" but rather a side-effect of the way that `acmd_hook` was implemented. Since the scripts ran once per frame, the `acmd!` macro did not use `sv_animcmd::frame` or `sv_animcmd::is_excute` but rather it's own implementation.
+* While not a bug, `sv_animcmd` lua macros (i.e. `ATTACK`, `CATCH`, `ATK_HIT_ABS`, etc.) are done inline in each function and have their own defined functions in the `smash_script::macros` module. Feel free to implement new lua macros following the same format.
+### Compatibility with `skyline-acmd`'s `acmd!` macro
+Unfortunately, `lua-replace` and `smash-script` do not support the use of the `acmd!` macro. It is not my place (nor within my skillset) to reimplement this macro. It is up to the original author of the macro to decide if they want to modify it to supported this new style of script replacements. The `acmd!` macro's implementation was designed to be functional with scripts getting called once per frame, which these are not.
