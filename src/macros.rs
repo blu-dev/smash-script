@@ -87,6 +87,13 @@ pub unsafe fn HIT_NO(fighter: &mut L2CFighterCommon, num: u64, status: i32) {
     fighter.clear_lua_stack();
 }
 
+#[inline]
+pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter: &mut L2CFighterCommon, unk: u64, unk2: u64, unk3: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk, unk2, unk3);
+    sv_animcmd::ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
 #[macro_export]
 macro_rules! grab {
     ($fighter:ident, $($arg:expr),* $(,)?) => {
