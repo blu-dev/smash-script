@@ -13,7 +13,7 @@ Unlike `libacmd_hook` and `skyline-acmd`, the `smash-script` create does not sup
 
 ### ACMD (AnimCMD) Scripts
 Replacing scripts works for all of the animcmd script types: `game` (attack), `effect`, `sound`, and `expression` (misc.). A script can be created as follows:
-```rs
+```rust
 use smash_script::script;
 use smash_script::macros;
 use smash::lua2cpp::L2CFighterCommon;
@@ -56,7 +56,7 @@ Due to the way exception handling and stack unwinding was implemented, local var
 Another great feature of `acmd_hook` which has been reimplemented in `lua-replace` is that of once-per-frame fighter and weapon callbacks. There is a downside, though, which is that you have to match the fighter kind in *every single callback* that you use. These have been reimplemented to use a macro attribute and now directly replace the fighter's own system control function. The original function is still called immediately after the user's replace, just like `acmd_hook`.
 
 Making a fighter/weapon specific once-per-frame hook is as simple as the following:
-```rs
+```rust
 use smash_script::{ fighter_frame, weapon_frame };
 
 #[fighter_frame( agent = FIGHTER_KIND_MARIOD )]
