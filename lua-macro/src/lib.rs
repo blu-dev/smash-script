@@ -239,7 +239,7 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
     // simpler to do it this way imo
     let func_string = item_clone.to_string();
     let func_string = func_string.replace(&format!("fn {}", usr_fn_name.to_string()), &format!("fn {}", usr_new_name.to_string()));
-    let func_string = "#[inline]\n".to_owned() + &func_string;
+    let func_string = "#[inline(always)]\n".to_owned() + &func_string;
     let mut output: TokenStream2 = func_string.parse().unwrap();
 
     let mut replace_strings: Vec<String> = Vec::new();

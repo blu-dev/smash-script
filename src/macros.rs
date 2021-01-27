@@ -71,6 +71,14 @@ pub unsafe fn FT_MOTION_RATE(fighter: &mut L2CFighterCommon, rate: f32) {
 }
 
 #[inline]
+pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(fighter: &mut L2CFighterCommon, arg: u64) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, arg);
+    sv_animcmd::FT_START_ADJUST_MOTION_FRAME_arg1(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CFighterCommon, article: i32) -> bool {
     fighter.clear_lua_stack();
     lua_args!(fighter, article);
@@ -101,6 +109,13 @@ pub unsafe fn QUAKE(fighter: &mut L2CFighterCommon, kind: i32) {
     lua_args!(fighter, kind);
     sv_animcmd::QUAKE(fighter.lua_state_agent);
     fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn game_CaptureCutCommon(fighter: &mut L2CFighterCommon) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+    sv_animcmd::ATTACK_ABS(fighter.lua_state_agent);
 }
 
 #[macro_export]
@@ -134,11 +149,4 @@ macro_rules! notify_event_msc_cmd {
         let ret = $fighter.pop_lua_stack(1).get_int();
         ret
     }
-}
-
-#[inline]
-pub unsafe fn game_CaptureCutCommon(fighter: &mut L2CFighterCommon) {
-    fighter.clear_lua_stack();
-    lua_args!(fighter, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
-    sv_animcmd::ATTACK_ABS(fighter.lua_state_agent);
 }
