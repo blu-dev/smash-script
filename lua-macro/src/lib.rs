@@ -247,8 +247,15 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
 
     for x in 0..replace_strings.len() {
         let current_string = replace_strings.get_mut(x).unwrap();
-        let current_script = _scripts.get(x).unwrap();
-        *current_string = format!("smash_script::replace_lua_script(\"{}\", smash::phx::Hash40::new(\"{}\"), {});", _agent.value(), current_script.value(), bootstrapper_name.to_string());
+        let current_script = _scripts.get(x).unwrap().value();
+        let current_script_hash;
+        if current_script.starts_with("0x") {
+            current_script_hash = format!("smash::phx::Hash40::new_raw({})", current_script);
+        }
+        else {
+            current_script_hash = format!("smash::phx::Hash40::new(\"{}\")", current_script);
+        }
+        *current_string = format!("smash_script::replace_lua_script(\"{}\", {}, {});", _agent.value(), current_script_hash, bootstrapper_name.to_string());
     }
 
     let mut installer_string = format!(r#"
