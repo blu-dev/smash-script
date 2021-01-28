@@ -345,7 +345,7 @@ pub unsafe fn EFFECT_FOLLOW_FLIP<
     D: ToF32,
     E: ToF32,
     F: ToF32,
-    G: to_f32
+    G: ToF32
     >(fighter: &mut L2CAgentBase, unk: Hash40, unk2: Hash40, bone: Hash40, unk3: A, unk4: B, unk5: C, unk6: D, unk7: E, unk8: F, unk9: G, unk10: bool, axis: i32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk, unk2, bone, unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10, axis);
