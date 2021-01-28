@@ -198,13 +198,13 @@ pub fn fighter_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
 
     quote!(
         #[allow(unused_unsafe)]
-        pub unsafe extern "C" fn #replace_name(fighter: &mut L2CFighterCommon) -> smash::lib::L2CValue {
+        pub unsafe extern "C" fn #replace_name(fighter: &mut smash::lua2cpp::L2CFighterCommon) -> smash::lib::L2CValue {
             #usr_fn_name(fighter);
 
             smash::lua2cpp::L2CFighterCommon_sys_line_system_control_fighter(fighter)
         }
 
-        unsafe fn #install_name() {
+        pub unsafe fn #install_name() {
             smash_script::replace_sys_line_fighter_script(#_agent, #replace_name);
         }
     ).to_tokens(&mut output);
@@ -229,7 +229,7 @@ pub fn weapon_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
 
     quote!(
         #[allow(unused_unsafe)]
-        pub unsafe extern "C" fn #replace_name(fighter: &mut L2CFighterBase) -> smash::lib::L2CValue {
+        pub unsafe extern "C" fn #replace_name(fighter: &mut smash::lua2cpp::L2CFighterBase) -> smash::lib::L2CValue {
             #usr_fn_name(fighter);
 
             smash::lua2cpp::L2CFighterBase_sys_line_control_system(fighter) // call original C function just because /shrug
