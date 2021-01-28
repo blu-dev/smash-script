@@ -172,6 +172,14 @@ pub unsafe fn SET_SPEED_EX<A: ToF32, B: ToF32>(fighter: &mut L2CAgentBase, speed
 }
 
 #[inline]
+pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL<A: ToF32>(fighter: &mut L2CAgentBase, id: u64, val: A) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, id, val.to_f32());
+    sv_animcmd::ATK_SET_SHIELD_SETOFF_MUL(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg5(fighter: &mut L2CAgentBase, unk: u64, unk2: u64, unk3: u64, unk4: u64, unk5: f32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk, unk2, unk3, unk4, unk5);
