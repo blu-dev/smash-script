@@ -11,6 +11,7 @@ use quote::{quote, ToTokens};
 struct ScriptAttrs {
     pub agent: syn::LitStr,
     pub scripts: Vec<syn::LitStr>,
+    pub is_new: bool
 }
 
 #[derive(Debug, Clone)]
@@ -76,6 +77,7 @@ mod kw {
     syn::custom_keyword!(agent);
     syn::custom_keyword!(script);
     syn::custom_keyword!(scripts);
+    syn::custom_keyword!(new);
 }
 
 impl syn::parse::Parse for ScriptAttrs {
@@ -109,10 +111,30 @@ impl syn::parse::Parse for ScriptAttrs {
             return Err(look.error());
         };
 
-        Ok(Self {
-            agent: agent,
-            scripts: scripts
-        })
+        let comma: syn::Result<syn::Token![,]> = input.parse();
+        if comma.is_ok() {
+            let look = input.lookahead1();
+            if look.peek(kw::new) {
+                let _: kw::new = input.parse()?;
+                return Ok(
+                    Self {
+                        agent: agent,
+                        scripts: scripts,
+                        is_new: true
+                    }
+                );
+            }
+            else {
+                Err(look.error())
+            }
+        }
+        else {
+            Ok(Self {
+                agent: agent,
+                scripts: scripts,
+                is_new: false
+            })
+        }
     }
 }
 
@@ -255,7 +277,7 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
         else {
             current_script_hash = format!("smash::phx::Hash40::new(\"{}\")", current_script);
         }
-        *current_string = format!("smash_script::replace_lua_script(\"{}\", {}, {});", _agent.value(), current_script_hash, bootstrapper_name.to_string());
+        *current_string = format!("smash_script::replace_lua_script(\"{}\", {}, {}, {});", _agent.value(), current_script_hash, bootstrapper_name.to_string(), attr.is_new);
     }
 
     let mut installer_string = format!(r#"
@@ -268,7 +290,7 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
     quote!(
         #[inline(never)]
         #[allow(unused_unsafe)]
-        unsafe fn #internal_name(l2c_ret: &mut smash::lib::L2CValue, fighter: &mut smash::lua2cpp::L2CFighterCommon) {
+        unsafe fn #internal_name(l2c_ret: &mut smash::lib::L2CValue, fighter: &mut smash::lua2cpp::L2CAgentBase) {
             fighter.clear_lua_stack();
             #usr_new_name(fighter);
             *l2c_ret = smash::lib::L2CValue::new_int(0);
@@ -280,7 +302,7 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
 
         #[inline(never)]
         #[allow(unused_unsafe)]
-        unsafe extern "C" fn #bootstrapper_name(fighter: &mut smash::lua2cpp::L2CFighterCommon, variadic: &mut smash::lib::utility::Variadic) {
+        unsafe extern "C" fn #bootstrapper_name(fighter: &mut smash::lua2cpp::L2CAgentBase, variadic: &mut smash::lib::utility::Variadic) {
             let format = variadic.get_format();
             let mut value = smash::lib::L2CValue::new();
             if format == 0 as *const skyline::libc::c_char {

@@ -49,7 +49,7 @@ Let's break down the above script. The `script` macro attribute takes two attrib
 * `script` is used for replacing a single script. It takes the name of the script (if you are familiar with `skyline-acmd`, this is the `animcmd` attribute). It's sibling attribute, `scripts`, is the same but instead takes an array of script names which it should replace. All of them get installed with the same call, and it is designed to ease replacing multiple scripts which appear to be the same (or need to be the same for a mod).
 
 If you are familiar with `skyline-acmd`, you might be confused at something: why do I use a `println!` macro at the beginning of the function? Won't that print every frame? The short answer is: no. These scripts, just like vanilla, run **once**. This means you can use as many local variables as you want without fear of them getting replaced or reinitialized each frame.
-#### "There be dragons" - A note about using local variables
+#### "There Be Dragons": A note about using local variables
 Due to the way exception handling and stack unwinding was implemented, local variables are *usable*, but I would strongly advocate not using local variables which allocate dynamic memory (heap) on creation and free it on their destruction (or drop), as these methods will never get called should the script be interrupted. 
 
 ### Once-per-frame Scripts
@@ -117,6 +117,16 @@ Calling once-per-frame with Dr. Mario's Capsule: D7
 
 You can only replace the once-per-frame script **once** (this also goes for regular AnimCMD script replacements). Any additional logic that needs to be separated should continue to use global callbacks, which work separately from once-per-frame script replacments. You can have as many global callbacks as you would like, but only one replacement script per fighter/weapon.
 
+### Adding new scripts
+Currently, an *extremely* experimental feature is the ability to add new scripts into the game. This is under active research by myself. You might ask why it is under research if `acmd_hook` already provides that functionality, and the answer is pretty simple:
+
+`L2CAgentBase::call_coroutine` searches a table of hashes for a function. If it finds it, it gets called. If it doesn't, it doesn't get called. `libacmd_hook` intercepts this check with its own, and since the user provides their own functions, `call_coroutine` would get redirected to the users function. `liblua_replace` does not intercept this check and relies on supplying the game with the correct information it needs to call the function on its own. Currently, adding scripts with `lua_replace` will *only* work with fighters and will add the script to all of their `L2CFighterAnimcmd<>Common` agents. It is unknown when this will receive proper implementation.
+
+The following is how to add a script (or multiple) to the game
+```rust
+#[script( agent = "koopa", scripts = ["game_appealhil", "game_appealhir"], new )]
+```
+
 ## Technical Information
 ### Runtime complexity and performance increases
 Currently, `acmd_hook` searches a vector which contains every single hook installed on every frame for every fighter. This is an O(n) complexity multiple times each frame during a match. While not an issue for smaller mods, larger mods that aim to reimplement or change the majority of fighters and scripts in the game begin to have noticeable performance dips when introducing more than 2 fighters to the screen.
@@ -130,3 +140,8 @@ Currently, `acmd_hook` searches a vector which contains every single hook instal
 * While not a bug, `sv_animcmd` lua macros (i.e. `ATTACK`, `CATCH`, `ATK_HIT_ABS`, etc.) are done inline in each function and have their own defined functions in the `smash_script::macros` module. Feel free to implement new lua macros following the same format.
 ### Compatibility with `skyline-acmd`'s `acmd!` macro
 Unfortunately, `lua-replace` and `smash-script` do not support the use of the `acmd!` macro. It is not my place (nor within my skillset) to reimplement this macro. It is up to the original author of the macro to decide if they want to modify it to supported this new style of script replacements. The `acmd!` macro's implementation was designed to be functional with scripts getting called once per frame, which these are not.
+
+## "There Be Dragons": A Note of Caution
+The most important feature that the `acmd_hook` and `skyline-acmd` provide over `lua_replace` and `smash-script` is a pretty crucial one: stability. The current implementaiton of `lua_replace` **will** break on the next update, and it is unsure if it will break on updates following that one. I beg of you: please do not anticipate this to be the glorious rise of true acmd and fall of old acmd. For the end user, there might not actually be that much difference, but for larger modpacks it will make a signifcant difference.
+
+Please be careful when using this. 
