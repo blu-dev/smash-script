@@ -369,6 +369,13 @@ pub unsafe fn UNABLE_AREA(fighter: &mut L2CAgentBase, kind: i32) {
     fighter.clear_lua_stack();
 }
 
+#[inline]
+pub unsafe fn SET_SEARCH_SIZE_EXIST<A: ToF32>(fighter: &mut L2CAgentBase, id: u64, size: A) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, id, size.to_f32());
+    sv_animcmd::SET_SEARCH_SIZE_EXIST(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
 
 #[inline]
 pub unsafe fn LAST_PARTICLE_SET_COLOR<
