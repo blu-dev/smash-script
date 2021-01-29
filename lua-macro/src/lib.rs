@@ -185,7 +185,7 @@ impl syn::parse::Parse for SysLineAttrs {
 pub fn fighter_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
     let attrs = syn::parse_macro_input!(attr as SysLineAttrs);
     let item_clone = item.clone();
-    let mut usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
+    let usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
 
     let _agent = attrs.agent;
     let usr_fn_name = &usr_fn.sig.ident;
@@ -216,7 +216,7 @@ pub fn fighter_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn weapon_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
     let attrs = syn::parse_macro_input!(attr as SysLineAttrs);
     let item_clone = item.clone();
-    let mut usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
+    let usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
 
     let _agent = attrs.agent;
     let usr_fn_name = &usr_fn.sig.ident;
