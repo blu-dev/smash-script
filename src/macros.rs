@@ -516,6 +516,14 @@ pub unsafe fn STOP_SE(fighter: &mut L2CAgentBase, se: Hash40) {
 }
 
 #[inline]
+pub unsafe fn PLAY_STEP(fighter: &mut L2CAgentBase, step: Hash40) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, step);
+    sv_animcmd::PLAY_STEP(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn PLAY_SEQUENCE(fighter: &mut L2CAgentBase, sequence: Hash40) {
     fighter.clear_lua_stack();
     lua_args!(fighter, sequence);
