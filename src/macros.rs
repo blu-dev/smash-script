@@ -532,6 +532,14 @@ pub unsafe fn PLAY_SEQUENCE(fighter: &mut L2CAgentBase, sequence: Hash40) {
 }
 
 #[inline]
+pub unsafe fn AFTER_IMAGE_OFF(fighter: &mut L2CAgentBase, unk: u64) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk);
+    sv_animcmd::AFTER_IMAGE_OFF(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn EFFECT_DETACH_KIND(fighter: &mut L2CAgentBase, effect: Hash40, unk: i64) {
     fighter.clear_lua_stack();
     lua_args!(fighter, effect, unk);
