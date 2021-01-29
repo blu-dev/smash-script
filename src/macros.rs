@@ -214,10 +214,11 @@ pub unsafe fn WHOLE_HIT(fighter: &mut L2CAgentBase, hit_status: i32) {
 pub unsafe fn FLASH<
     A: ToF32,
     B: ToF32,
-    C: ToF32
-    >(fighter: &mut L2CAgentBase, unk: u64, unk2: A, unk3: B, unk4: C) {
+    C: ToF32,
+    D: ToF32
+    >(fighter: &mut L2CAgentBase, unk: A, unk2: B, unk3: C, unk4: D) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk, unk2.to_f32(), unk3.to_f32(), unk4.to_f32());
+    lua_args!(fighter, unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32());
     sv_animcmd::FLASH(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
