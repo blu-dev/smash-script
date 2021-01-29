@@ -52,15 +52,15 @@ macro_rules! lua_args {
 }
 
 #[inline]
-pub unsafe fn ATTACK(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: u64, fkb: u64, bkb: u64, size: f32, x: f32, y: f32, z: f32,
-                    x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: i64, trip: f32, rehit: i64, reflectable: bool,
+pub unsafe fn ATTACK<A: ToF32, B: ToF32>(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: u64, fkb: u64, bkb: u64, size: f32, x: f32, y: f32, z: f32,
+                    x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: A, trip: f32, rehit: B, reflectable: bool,
                     absorbable: bool, flinchless: bool, disable_hitlag: bool, direct: bool, ground_air: i32, hitbits: i32, collision_part: i32, friendly_fire: bool, effect: Hash40, sfx_level: i32, collision_sound: i32, _type: i32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, id, part, bone, damage, angle, kbg, fkb, bkb, size, x, y, z);
     if let Some(x2) = x2 { lua_args!(fighter, x2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(y2) = y2 { lua_args!(fighter, y2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(z2) = z2 { lua_args!(fighter, z2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
-    lua_args!(fighter, hitlag, sdi, clang, facing, set_weight, shield_damage, trip, rehit, reflectable, absorbable, flinchless, disable_hitlag, direct, ground_air, hitbits, collision_part, friendly_fire, effect, sfx_level, collision_sound, _type);
+    lua_args!(fighter, hitlag, sdi, clang, facing, set_weight, shield_damage.to_f32(), trip, rehit.to_f32(), reflectable, absorbable, flinchless, disable_hitlag, direct, ground_air, hitbits, collision_part, friendly_fire, effect, sfx_level, collision_sound, _type);
     sv_animcmd::ATTACK(fighter.lua_state_agent);
 }
 
