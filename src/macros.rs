@@ -53,7 +53,7 @@ macro_rules! lua_args {
 
 #[inline]
 pub unsafe fn ATTACK(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: u64, fkb: u64, bkb: u64, size: f32, x: f32, y: f32, z: f32,
-                    x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: i64, trip: f32, rehit: u64, reflectable: bool,
+                    x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: i64, trip: f32, rehit: i64, reflectable: bool,
                     absorbable: bool, flinchless: bool, disable_hitlag: bool, direct: bool, ground_air: i32, hitbits: i32, collision_part: i32, friendly_fire: bool, effect: Hash40, sfx_level: i32, collision_sound: i32, _type: i32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, id, part, bone, damage, angle, kbg, fkb, bkb, size, x, y, z);
