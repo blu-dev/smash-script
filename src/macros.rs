@@ -353,6 +353,22 @@ pub unsafe fn EFFECT_FOLLOW_FLIP<
     fighter.clear_lua_stack();
 }
 
+#[inline]
+pub unsafe fn ENABLE_AREA(fighter: &mut L2CAgentBase, kind: i32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, kind);
+    sv_animcmd::ENABLE_AREA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn UNABLE_AREA(fighter: &mut L2CAgentBase, kind: i32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, kind);
+    sv_animcmd::UNABLE_AREA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
 
 #[inline]
 pub unsafe fn LAST_PARTICLE_SET_COLOR<
