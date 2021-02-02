@@ -646,13 +646,14 @@ pub unsafe fn REVERSE_LR(fighter: &mut L2CAgentBase) {
 }
 
 #[inline]
-pub unsafe fn SEARCH(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, collision: i32,
-    hit_status: i32, unk: u64, ground_air: i32, collision_category: i32, collision_parts: i32, unk2: bool) {
+pub unsafe fn SEARCH(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, 
+    collision: i32, hit_status: i32, unk: u64, ground_air: i32, collision_category: i32, collision_parts: i32, unk2: bool) {
     fighter.clear_lua_stack();
     lua_args!(fighter, id, part, bone, size, x, y, z);
     if let Some(x2) = x2 { lua_args!(fighter, x2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(y2) = y2 { lua_args!(fighter, y2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(z2) = z2 { lua_args!(fighter, z2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
+    lua_args!(fighter, collision, hit_status, unk, ground_air, collision_category, collision_parts, unk2);
     sv_animcmd::SEARCH(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
