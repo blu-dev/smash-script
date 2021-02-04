@@ -232,7 +232,7 @@ pub fn weapon_frame(attr: TokenStream, item: TokenStream) -> TokenStream {
         pub unsafe extern "C" fn #replace_name(fighter: &mut smash::lua2cpp::L2CFighterBase) -> smash::lib::L2CValue {
             #usr_fn_name(fighter);
 
-            smash::lua2cpp::L2CFighterBase_sys_line_control_system(fighter) // call original C function just because /shrug
+            smash::lua2cpp::L2CFighterBase_sys_line_system_control(fighter) // call original C function just because /shrug
         }
 
         unsafe fn #install_name() {
