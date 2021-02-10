@@ -61,7 +61,8 @@ pub unsafe fn ATTACK<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, i
     if let Some(y2) = y2 { lua_args!(fighter, y2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     if let Some(z2) = z2 { lua_args!(fighter, z2); } else { fighter.push_lua_stack(&mut L2CValue::new()); }
     lua_args!(fighter, hitlag, sdi, clang, facing, set_weight);
-    if (shield_damage.to_f32().is_nan()) { fighter.push_lua_stack(&mut Hash40::new("no").into()); } else { fighter.push_lua_stack(&mut shield_damage.to_f32().into()); }
+    let dmg = shield_damage.to_f32();
+    if (dmg.is_nan()) { fighter.push_lua_stack(&mut Hash40::new("no").into()); } else { fighter.push_lua_stack(&mut dmg.into()); }
     lua_args!(fighter, trip, rehit.to_f32(), reflectable, absorbable, flinchless, disable_hitlag, direct, ground_air, hitbits, collision_part, friendly_fire, effect, sfx_level, collision_sound, _type);
     sv_animcmd::ATTACK(fighter.lua_state_agent);
 }
