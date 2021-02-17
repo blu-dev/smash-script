@@ -52,7 +52,7 @@ macro_rules! lua_args {
 }
 
 #[inline]
-pub unsafe fn ATTACK<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: u64, fkb: u64, bkb: u64, size: C, x: f32, y: f32, z: f32,
+pub unsafe fn ATTACK<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: i32, fkb: i32, bkb: i32, size: C, x: f32, y: f32, z: f32,
                     x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: A, trip: f32, rehit: B, reflectable: bool,
                     absorbable: bool, flinchless: bool, disable_hitlag: bool, direct: bool, ground_air: i32, hitbits: i32, collision_part: i32, friendly_fire: bool, effect: Hash40, sfx_level: i32, collision_sound: i32, _type: i32) {
     fighter.clear_lua_stack();
@@ -68,7 +68,7 @@ pub unsafe fn ATTACK<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, i
 }
 
 #[inline]
-pub unsafe fn ATTACK_IGNORE_THROW<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: u64, fkb: u64, bkb: u64, size: C, x: f32, y: f32, z: f32,
+pub unsafe fn ATTACK_IGNORE_THROW<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: i32, fkb: i32, bkb: i32, size: C, x: f32, y: f32, z: f32,
                     x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: A, trip: f32, rehit: B, reflectable: bool,
                     absorbable: bool, flinchless: bool, disable_hitlag: bool, direct: bool, ground_air: i32, hitbits: i32, collision_part: i32, friendly_fire: bool, effect: Hash40, sfx_level: i32, collision_sound: i32, _type: i32) {
     fighter.clear_lua_stack();
@@ -92,7 +92,7 @@ pub unsafe fn ATK_POWER<F: ToF32>(fighter: &mut L2CAgentBase, id: u64, power: F)
 }
 
 #[inline]
-pub unsafe fn ATTACK_ABS(fighter: &mut L2CAgentBase, kind: i32, id: u64, damage: f32, angle: u64, kbg: u64, fkb: u64, bkb: u64, hitlag: f32,
+pub unsafe fn ATTACK_ABS(fighter: &mut L2CAgentBase, kind: i32, id: u64, damage: f32, angle: u64, kbg: i32, fkb: i32, bkb: i32, hitlag: f32,
                         unk: f32, facing: i32, unk2: f32, unk3: bool, effect: Hash40, sfx_level: i32, sfx_type: i32, _type: i32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, kind, id, damage, angle, kbg, fkb, bkb, hitlag, unk, facing, unk2, unk3, effect, sfx_level, sfx_type, _type);
