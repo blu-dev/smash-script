@@ -134,10 +134,10 @@ pub unsafe fn FT_MOTION_RATE<F: ToF32>(fighter: &mut L2CAgentBase, rate: F) {
 }
 
 #[inline]
-pub unsafe fn FT_NEAR_LEAVE_OTTOTTO<A: ToF32, B: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B) {
+pub unsafe fn FT_LEAVE_NEAR_OTTOTTO<A: ToF32, B: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk1.to_f32(), unk2.to_f32());
-    sv_animcmd::FT_NEAR_LEAVE_OTTOTTO(fighter.lua_state_agent);
+    sv_animcmd::FT_LEAVE_NEAR_OTTOTTO(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
 
