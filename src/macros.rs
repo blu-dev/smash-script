@@ -192,7 +192,7 @@ pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter: &mut L2CAgentBase, unk: u6
 #[inline]
 pub unsafe fn ATK_LERP_RATIO <A: ToF32> (fighter: &mut L2CAgentBase, ratio: A) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, ratio);
+    lua_args!(fighter, ratio.to_f32());
     sv_animcmd::ATK_LERP_RATIO(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -706,7 +706,7 @@ pub unsafe fn PLAY_SEQUENCE(fighter: &mut L2CAgentBase, sequence: Hash40) {
 #[inline]
 pub unsafe fn SET_PLAY_INHIVIT<A: ToF32>(fighter: &mut L2CAgentBase, se: Hash40, unk: A) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, se, unk);
+    lua_args!(fighter, se, unk.to_f32());
     sv_animcmd::SET_PLAY_INHIVIT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
