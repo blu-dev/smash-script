@@ -6,12 +6,13 @@ use syn::{parenthesized, bracketed, token, Token};
 use proc_macro::TokenStream;
 use proc_macro2::TokenStream as TokenStream2;
 use quote::{quote, ToTokens};
+use smash::hash40;
 //use std::io::Write;
 
 struct ScriptAttrs {
     pub agent: syn::LitStr,
     pub scripts: Vec<syn::LitStr>,
-    pub is_new: bool
+    pub category: syn::Path
 }
 
 #[derive(Debug, Clone)]
@@ -77,7 +78,7 @@ mod kw {
     syn::custom_keyword!(agent);
     syn::custom_keyword!(script);
     syn::custom_keyword!(scripts);
-    syn::custom_keyword!(new);
+    syn::custom_keyword!(category);
 }
 
 impl syn::parse::Parse for ScriptAttrs {
@@ -111,30 +112,22 @@ impl syn::parse::Parse for ScriptAttrs {
             return Err(look.error());
         };
 
-        let comma: syn::Result<syn::Token![,]> = input.parse();
-        if comma.is_ok() {
-            let look = input.lookahead1();
-            if look.peek(kw::new) {
-                let _: kw::new = input.parse()?;
-                return Ok(
-                    Self {
-                        agent: agent,
-                        scripts: scripts,
-                        is_new: true
-                    }
-                );
-            }
-            else {
-                Err(look.error())
-            }
+        let _: syn::Token![,] = input.parse()?;
+        let look = input.lookahead1();
+
+        let category: syn::Path = if look.peek(kw::category) {
+            let MetaItem::<kw::category, syn::Path> { item: cat, .. } = input.parse()?;
+
+            cat
         }
         else {
-            Ok(Self {
-                agent: agent,
-                scripts: scripts,
-                is_new: false
-            })
-        }
+            return Err(look.error());
+        };
+        Ok(Self {
+            agent: agent,
+            scripts: scripts,
+            category: category
+        })
     }
 }
 
@@ -267,6 +260,14 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut replace_strings: Vec<String> = Vec::new();
     replace_strings.resize(_scripts.len(), "".to_string());
 
+    let agent_name = _agent.value();
+    let agent_hash;
+    if agent_name.starts_with("0x") {
+        agent_hash = format!("smash::phx::Hash40::new_raw({})", agent_name);
+    }
+    else {
+        agent_hash = format!("smash::phx::Hash40::new(\"{}\")", agent_name);
+    }
     for x in 0..replace_strings.len() {
         let current_string = replace_strings.get_mut(x).unwrap();
         let current_script = _scripts.get(x).unwrap().value();
@@ -277,7 +278,7 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
         else {
             current_script_hash = format!("smash::phx::Hash40::new(\"{}\")", current_script);
         }
-        *current_string = format!("smash_script::replace_lua_script(\"{}\", {}, {}, {});", _agent.value(), current_script_hash, bootstrapper_name.to_string(), attr.is_new);
+        *current_string = format!("smash_script::replace_lua_script({}, {}, {}, {});", agent_hash, current_script_hash, bootstrapper_name.to_string(), attr.category.get_ident().unwrap().to_string());
     }
 
     let mut installer_string = format!(r#"
