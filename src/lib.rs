@@ -4,10 +4,10 @@
 pub mod macros;
 
 pub enum ScriptCategory {
-    EFFECT,
-    EXPRESSION,
-    GAME,
-    SOUND
+    SCRIPT_EFFECT,
+    SCRIPT_EXPRESSION,
+    SCRIPT_GAME,
+    SCRIPT_SOUND
 }
 
 pub use ScriptCategory::*;
