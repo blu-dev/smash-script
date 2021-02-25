@@ -10,7 +10,7 @@ edition = "2018"
 syn = { version = "1", features = ["full", "extra-traits"] }
 quote = "1.0"
 proc-macro2 = "1.0"
-skyline_smash = { git = "https://github.com/ultimate-research/skyline-smash.git" }
+# skyline_smash = { git = "https://github.com/ultimate-research/skyline-smash.git" }
 # libc = "0.2.82"
 # skyline = { git = "https://github.com/ultimate-research/skyline-rs.git" }
 
