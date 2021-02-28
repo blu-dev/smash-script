@@ -836,12 +836,12 @@ pub unsafe fn AREA_WIND_2ND_RAD_arg9<
 }
 
 #[inline]
-pub unsafe fn AREA_WIND_2ND_RAD_arg10<
+pub unsafe fn AREA_WIND_2ND_arg10<
     A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32, G: ToF32, H: ToF32, I: ToF32, J: ToF32
     >(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I, unk10: J) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32());
-    sv_animcmd::AREA_WIND_2ND_RAD_arg10(fighter.lua_state_agent);
+    sv_animcmd::AREA_WIND_2ND_arg10(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
 
