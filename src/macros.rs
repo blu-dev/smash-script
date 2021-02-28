@@ -159,6 +159,22 @@ pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -
 }
 
 #[inline]
+pub unsafe fn CAM_ZOOM_IN_arg5(fighter: &mut L2CAgentBase, zoom_amount: f32, arg2: f32, arg3: f32, y_rot: f32, x_rot: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, zoom_amount, arg2, arg3, y_rot, x_rot);
+    sv_animcmd::CAM_ZOOM_IN_arg5(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn CAM_ZOOM_IN_arg6(fighter: &mut L2CAgentBase, arg1: f32, arg2: f32, arg3: f32, arg4: f32, arg5: f32, arg6: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, arg1, arg2, arg3, arg4, arg5, arg6);
+    sv_animcmd::CAM_ZOOM_IN_arg6(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn HIT_NO(fighter: &mut L2CAgentBase, num: u64, status: i32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, num, status);
@@ -820,6 +836,16 @@ pub unsafe fn AREA_WIND_2ND_RAD_arg9<
 }
 
 #[inline]
+pub unsafe fn AREA_WIND_2ND_RAD_arg10<
+    A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32, G: ToF32, H: ToF32, I: ToF32, J: ToF32
+    >(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I, unk10: J) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32());
+    sv_animcmd::AREA_WIND_2ND_RAD_arg10(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn FT_ADD_DAMAGE<F: ToF32>(fighter: &mut L2CAgentBase, damage: F) {
     fighter.clear_lua_stack();
     lua_args!(fighter, damage.to_f32());
@@ -842,8 +868,6 @@ pub unsafe fn RUMBLE_HIT(fighter: &mut L2CAgentBase, kind: Hash40, unk: u64) {
     sv_animcmd::RUMBLE_HIT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
-
-
 
 #[inline]
 pub unsafe fn EFFECT_DETACH_KIND(fighter: &mut L2CAgentBase, effect: Hash40, unk: i64) {
@@ -931,6 +955,17 @@ macro_rules! damage {
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::damage($fighter.lua_state_agent);
         let ret = $fighter.pop_lua_stack(1).get_int();
+        ret
+    }
+}
+
+#[macro_export]
+macro_rules! physics {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::physics($fighter.lua_state_agent);
+        let ret = $fighter.pop_lua_stack(1).get_bool();
         ret
     }
 }
