@@ -781,10 +781,10 @@ pub unsafe fn AFTER_IMAGE4_ON_arg29(fighter: &mut L2CAgentBase, unk: Hash40, unk
 
 #[inline]
 pub unsafe fn EFFECT_FOLLOW_NO_STOP<
-    A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: u64, unk2: A, unk3: B, unk4: C, unk5: D, unk6: E, unk7: F, unk8: bool) {
+    A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32 , G: ToF32
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk, unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
+    lua_args!(fighter, effect, bone, unk.to_f32, unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
     sv_animcmd::EFFECT_FOLLOW_NO_STOP(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
