@@ -976,7 +976,7 @@ macro_rules! attack {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::attack($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_bool();
+        let ret = $fighter.pop_lua_stack(1).get_int();
         ret
     }
 }
