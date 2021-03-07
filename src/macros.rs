@@ -260,6 +260,21 @@ pub unsafe fn CAM_ZOOM_OUT_FINAL(fighter: &mut L2CAgentBase) {
 }
 
 #[inline]
+pub unsafe fn FLASH(fighter: &mut L2CAgentBase, red: f32, green: f32, blue: f32, alpha: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, red, green, blue, alpha);
+    sv_animcmd::FLASH(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn COL_NORMAL(fighter: &mut L2CAgentBase) {
+    fighter.clear_lua_stack();
+    sv_animcmd::COL_NORMAL(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn CAM_ZOOM_IN_FINAL_arg13(fighter: &mut L2CAgentBase, x: f32, y: f32, z: f32, unk1: i32, unk2: u64, unk3: u64, unk4: i32, unk5: u64, unk6: bool, object_id: u32, unk7: u64, unk8: i32, unk9: u64) {
     fighter.clear_lua_stack();
     lua_args!(fighter, x, y, z, unk1, unk2, unk3, unk4, unk5, unk6, object_id, unk7 ,unk8, unk9);
