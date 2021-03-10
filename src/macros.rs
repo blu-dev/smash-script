@@ -150,6 +150,14 @@ pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(fighter: &mut L2CAgentBase, arg:
 }
 
 #[inline]
+pub unsafe fn LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT<F: ToF32>(fighter: &mut L2CAgentBase, offset: F) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, offset.to_f32());
+    sv_animcmd::LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
     fighter.clear_lua_stack();
     lua_args!(fighter, article);
@@ -898,7 +906,7 @@ macro_rules! damage {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::damage($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_int();
+        let ret = $fighter.pop_lua_stack(1).get_i32();
         ret
     }
 }
@@ -920,7 +928,7 @@ macro_rules! notify_event_msc_cmd {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_battle_object::notify_event_msc_cmd($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_int();
+        let ret = $fighter.pop_lua_stack(1).get_i32();
         ret
     }
 }

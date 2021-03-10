@@ -1,7 +1,7 @@
 #![feature(asm)]
 #![feature(const_loop)]
 #![feature(const_if_match)]
-use syn::{self, punctuated};
+use syn::{self, punctuated, parse_macro_input, DeriveInput};
 use syn::parse::{Parse, ParseStream};
 use syn::{parenthesized, bracketed, token, Token};
 use proc_macro::TokenStream;
@@ -93,6 +93,11 @@ struct StatusAttrs {
     pub condition: syn::Path
 }
 
+struct CommonAttrs {
+    pub status: syn::Path,
+    pub condition: syn::Path,
+    pub symbol: syn::LitStr
+}
 #[derive(Debug, Clone)]
 struct MetaItem<Keyword: Parse, Item: Parse> {
     pub ident: Keyword,
@@ -153,6 +158,7 @@ mod kw {
     syn::custom_keyword!(category);
     syn::custom_keyword!(status);
     syn::custom_keyword!(condition);
+    syn::custom_keyword!(symbol);
 }
 
 impl syn::parse::Parse for ScriptAttrs {
@@ -241,6 +247,47 @@ impl syn::parse::Parse for StatusAttrs {
             agent: agent,
             status: status,
             condition: condition
+        })
+    }
+}
+
+impl syn::parse::Parse for CommonAttrs {
+    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+        let look = input.lookahead1();
+        let status: syn::Path = if look.peek(kw::status) {
+            let MetaItem::<kw::status, syn::Path> { item: path, .. } = input.parse()?;
+
+            path
+        } else {
+            return Err(look.error());
+        };
+
+        let _: syn::Token![,] = input.parse()?;
+        let look = input.lookahead1();
+
+        let condition: syn::Path = if look.peek(kw::condition) {
+            let MetaItem::<kw::condition, syn::Path> { item: path, .. } = input.parse()?;
+            
+            path
+        } else {
+            return Err(look.error());
+        };
+
+        let _: syn::Token![,] = input.parse()?;
+        let look = input.lookahead1();
+
+        let symbol: syn::LitStr = if look.peek(kw::symbol) {
+            let MetaItem::<kw::symbol, syn::LitStr> { item: string, .. } = input.parse()?;
+
+            string
+        } else {
+            return Err(look.error());
+        };
+
+        Ok(Self {
+            status: status,
+            condition: condition,
+            symbol: symbol
         })
     }
 }
@@ -415,9 +462,8 @@ pub fn script(attr: TokenStream, item: TokenStream) -> TokenStream {
         #[inline(never)]
         #[allow(unused_unsafe)]
         unsafe fn #internal_name(l2c_ret: &mut smash::lib::L2CValue, fighter: &mut smash::lua2cpp::L2CAgentBase) {
-            fighter.clear_lua_stack();
             #usr_new_name(fighter);
-            *l2c_ret = smash::lib::L2CValue::new_int(0);
+            *l2c_ret = smash::lib::L2CValue::I32(0);
             asm!(r#"
             b #0x8
             .byte 0xE5, 0xB1, 0x00, 0xB0
@@ -493,4 +539,186 @@ pub fn status(attr: TokenStream, item: TokenStream) -> TokenStream {
     ).to_tokens(&mut output);
     installer_string.parse::<TokenStream2>().unwrap().to_tokens(&mut output);
     output.into()
+}
+
+#[proc_macro_derive(LuaStruct)]
+pub fn derive_lua_struct(_item: TokenStream) -> TokenStream {
+    let _clone = _item.clone();
+    let item_struct = parse_macro_input!(_clone as syn::ItemStruct);
+    let mut input = parse_macro_input!(_item as DeriveInput);
+    let mut into_l2cvalue: syn::ItemFn = syn::parse_quote! {
+        fn into(self) -> smash::lib::L2CValue {
+            let table = smash::lib::L2CTable::new(0);
+            let mut ret = smash::lib::L2CValue::Table(table);
+        }
+    };
+    let mut from_l2cvalue: syn::ItemFn = syn::parse_quote! {
+        fn from(val: &smash::lib::L2CValue) -> Self {
+            assert!(val.val_type == smash::lib::L2CValueType::Table);
+            let mut ret = Self::default();
+        }
+    };
+    let mut write_l2cvalue: syn::ItemFn = syn::parse_quote! {
+        fn write_value(&self, val: &mut L2CValue) {
+            assert!(val.val_type == smash::lib::L2CValueType::Table);
+        }
+    };
+    match &mut input.data {
+        syn::Data::Struct(ref mut struct_data) => {
+            match &mut struct_data.fields {
+                syn::Fields::Named(fields) => {
+                    let struct_name = item_struct.ident;
+                    let mut idents = Vec::new();
+                    for field in fields.named.iter() {
+                        idents.push(field.ident.clone().unwrap());
+                    }
+                    for x in 0..idents.len() {
+                        let id = idents.get(x).unwrap();
+                        into_l2cvalue.block.stmts.push(syn::parse_quote! {
+                            ret[stringify!(#id)] = self.#id.into();
+                        });
+                        from_l2cvalue.block.stmts.push(syn::parse_quote! {
+                            ret.#id = val[stringify!(#id)].clone().into();
+                        });
+                        write_l2cvalue.block.stmts.push(syn::parse_quote! {
+                            val[stringify!(#id)] = self.#id.into();
+                        });
+                    }
+                    into_l2cvalue.block.stmts.push(syn::parse_quote! { return ret; });
+                    from_l2cvalue.block.stmts.push(syn::parse_quote! { return ret; });
+                    return quote! {                        
+                        impl Into<smash::lib::L2CValue> for #struct_name {
+                            #into_l2cvalue
+                        }
+                        impl From<&smash::lib::L2CValue> for #struct_name {
+                            #from_l2cvalue
+                        }
+                        impl #struct_name {
+                            #write_l2cvalue
+                        }
+                    }.into();
+                }
+                _ => {
+                    return syn::Error::new(struct_data.struct_token.span, "LuaStruct must be used with a struct with named fields.").into_compile_error().into();
+                }
+            }
+        },
+        _ => {
+            return syn::Error::new(input.ident.span(), "LuaStruct must be used with a struct.").into_compile_error().into();
+        }
+    }
+}
+
+#[proc_macro]
+pub fn replace_common_status(input: TokenStream) -> TokenStream {
+    let ident = syn::parse_macro_input!(input as syn::Ident);
+    let installer_name = quote::format_ident!("_project_common_install_status_func_{}", ident);
+    quote!(
+        unsafe { #installer_name(); }
+    ).into()
+}
+
+#[proc_macro]
+pub fn replace_common_symbol(input: TokenStream) -> TokenStream {
+    let ident = syn::parse_macro_input!(input as syn::Ident);
+    let installer_name = quote::format_ident!("_project_common_install_replace_{}", ident);
+    quote!(
+        unsafe { #installer_name(); }
+    ).into()
+}
+
+#[proc_macro_attribute]
+pub fn replace(attr: TokenStream, item: TokenStream) -> TokenStream {
+    let attr = syn::parse_macro_input!(attr as MetaItem<kw::symbol, syn::LitStr>);
+    let usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
+
+    let usr_fn_name = &usr_fn.sig.ident;
+    let usr_fn_return = &usr_fn.sig.output;
+    let usr_fn_inputs = &usr_fn.sig.inputs;
+    let mut usr_input_idents = syn::punctuated::Punctuated::<syn::PatIdent, syn::token::Comma>::new();
+    for input in usr_fn_inputs.iter() {
+        match input {
+            syn::FnArg::Typed(arg) => {
+                let pat = (*arg.pat).clone();
+                match (pat) {
+                    syn::Pat::Ident(p) => {
+                        usr_input_idents.push(p);
+                    }
+                    _ => {}
+                }
+            }
+            _ => {}
+        }
+    }
+    // panic!("{}", usr_input_idents.to_token_stream().to_string());
+    let _symbol = attr.item;
+
+    let bind_name = quote::format_ident!("_project_common_bind_replace_{}", usr_fn_name);
+    let installer_name = quote::format_ident!("_project_common_install_replace_{}", usr_fn_name);
+
+    quote!(
+        #[allow(non_snake_case)]
+        #usr_fn
+
+        #[allow(unused_unsafe)]
+        #[allow(non_snake_case)]
+        pub unsafe extern "C" fn #bind_name(#usr_fn_inputs) #usr_fn_return {
+            #usr_fn_name(#usr_input_idents)
+        }
+
+        #[allow(non_snake_case)]
+        pub unsafe fn #installer_name() {
+            smash_script::replace_symbol(String::from("common"), String::from(#_symbol), #bind_name as *const extern "C" fn());
+        }
+    ).into()
+}
+
+#[proc_macro_attribute]
+pub fn common_status(attr: TokenStream, item: TokenStream) -> TokenStream {
+    let attr = syn::parse_macro_input!(attr as CommonAttrs);
+    let item_clone = item.clone();
+    let usr_fn = syn::parse_macro_input!(item as syn::ItemFn);
+
+    let usr_fn_name = &usr_fn.sig.ident;
+    let usr_fn_inputs = &usr_fn.sig.inputs;
+    let mut usr_input_idents = syn::punctuated::Punctuated::<syn::PatIdent, syn::token::Comma>::new();
+    for input in usr_fn_inputs.iter() {
+        match input {
+            syn::FnArg::Typed(arg) => {
+                let pat = (*arg.pat).clone();
+                match (pat) {
+                    syn::Pat::Ident(p) => {
+                        usr_input_idents.push(p);
+                    }
+                    _ => {}
+                }
+            }
+            _ => {}
+        }
+    }
+    let _status = attr.status;
+    let _condition = attr.condition;
+    let _symbol = attr.symbol;
+
+    let bind_name = quote::format_ident!("_project_common_bind_status_func_{}", usr_fn_name);
+    let installer_name = quote::format_ident!("_project_common_install_status_func_{}", usr_fn_name);
+
+    quote!(
+        #[allow(non_snake_case)]
+        #usr_fn
+
+        #[allow(unused_unsafe)]
+        #[allow(non_snake_case)]
+        unsafe extern "C" fn #bind_name(#usr_fn_inputs) -> L2CValue {
+            // we transmute here since we could be using either L2CFighterCommon or L2CWeaponCommon, taken from smash-script
+            // it's also nice to have a bind so we don't have to declare all of our replacements as extern "C"
+            #usr_fn_name(#usr_input_idents)
+        }
+
+        #[allow(non_snake_case)]
+        pub unsafe fn #installer_name() {
+            smash_script::replace_symbol(String::from("common"), String::from(#_symbol), #bind_name as *const extern "C" fn());
+            smash_script::replace_common_status(#_status, #_condition, #bind_name as *const extern "C" fn());
+        }
+    ).into()
 }
