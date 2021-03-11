@@ -612,7 +612,7 @@ pub fn derive_lua_struct(_item: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn replace_common_status(input: TokenStream) -> TokenStream {
     let ident = syn::parse_macro_input!(input as syn::Ident);
-    let installer_name = quote::format_ident!("_project_common_install_status_func_{}", ident);
+    let installer_name = quote::format_ident!("_lua_replace_common_install_status_func_{}", ident);
     quote!(
         unsafe { #installer_name(); }
     ).into()
@@ -621,7 +621,7 @@ pub fn replace_common_status(input: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn replace_common_symbol(input: TokenStream) -> TokenStream {
     let ident = syn::parse_macro_input!(input as syn::Ident);
-    let installer_name = quote::format_ident!("_project_common_install_replace_{}", ident);
+    let installer_name = quote::format_ident!("_lua_replace_common_install_replace_{}", ident);
     quote!(
         unsafe { #installer_name(); }
     ).into()
@@ -653,8 +653,8 @@ pub fn replace(attr: TokenStream, item: TokenStream) -> TokenStream {
     // panic!("{}", usr_input_idents.to_token_stream().to_string());
     let _symbol = attr.item;
 
-    let bind_name = quote::format_ident!("_project_common_bind_replace_{}", usr_fn_name);
-    let installer_name = quote::format_ident!("_project_common_install_replace_{}", usr_fn_name);
+    let bind_name = quote::format_ident!("_lua_replace_common_bind_replace_{}", usr_fn_name);
+    let installer_name = quote::format_ident!("_lua_replace_common_install_replace_{}", usr_fn_name);
 
     quote!(
         #[allow(non_snake_case)]
@@ -668,7 +668,7 @@ pub fn replace(attr: TokenStream, item: TokenStream) -> TokenStream {
 
         #[allow(non_snake_case)]
         pub unsafe fn #installer_name() {
-            smash_script::replace_symbol(String::from("common"), String::from(#_symbol), #bind_name as *const extern "C" fn());
+            smash_script::replace_symbol(String::from("common"), String::from(#_symbol), #bind_name as *const extern "C" fn(), 0 as _);
         }
     ).into()
 }
@@ -700,8 +700,8 @@ pub fn common_status(attr: TokenStream, item: TokenStream) -> TokenStream {
     let _condition = attr.condition;
     let _symbol = attr.symbol;
 
-    let bind_name = quote::format_ident!("_project_common_bind_status_func_{}", usr_fn_name);
-    let installer_name = quote::format_ident!("_project_common_install_status_func_{}", usr_fn_name);
+    let bind_name = quote::format_ident!("_lua_replace_common_bind_status_func_{}", usr_fn_name);
+    let installer_name = quote::format_ident!("_lua_replace_common_install_status_func_{}", usr_fn_name);
 
     quote!(
         #[allow(non_snake_case)]
@@ -717,7 +717,7 @@ pub fn common_status(attr: TokenStream, item: TokenStream) -> TokenStream {
 
         #[allow(non_snake_case)]
         pub unsafe fn #installer_name() {
-            smash_script::replace_symbol(String::from("common"), String::from(#_symbol), #bind_name as *const extern "C" fn());
+            smash_script::replace_symbol(String::from("common"), String::from(#_symbol), #bind_name as *const extern "C" fn(), 0 as _);
             smash_script::replace_common_status(#_status, #_condition, #bind_name as *const extern "C" fn());
         }
     ).into()

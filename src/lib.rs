@@ -119,6 +119,6 @@ extern "Rust" {
     pub fn add_sys_line_weapon_callback(func: SysLineWeaponCallbackFunc);
     pub fn add_fighter_reset_callback(func: SysLineCallbackFunc);
     pub fn add_global_reset_callback(func: SysLineWeaponCallbackFunc);
-    pub fn replace_symbol(module: String, symbol: String, replace: *const extern "C" fn());
+    pub fn replace_symbol(module: String, symbol: String, replace: *const extern "C" fn(), original: *mut *const extern "C" fn());
     pub fn replace_common_status(status: smash::lib::LuaConst, condition: smash::lib::LuaConst, replace: *const extern "C" fn());
 }
