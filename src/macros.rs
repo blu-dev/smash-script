@@ -672,9 +672,10 @@ pub unsafe fn FILL_SCREEN_MODEL_COLOR<
     G: ToF32,
     H: ToF32,
     I: ToF32,
-    >(fighter: &mut L2CAgentBase, unk1: i32, unk2: A, unk3: B, unk4: C, unk5: D, unk6: E, unk7: F, unk8: G, unk9: H, effect_screen_layer: i32, unk10: I) {
+    J: ToF32,
+    >(fighter: &mut L2CAgentBase, unk1: i32, unk2: A, unk3: B, unk4: C, unk5: D, unk6: E, unk7: F, unk8: G, unk9: H, unk10: I, effect_screen_layer: i32, unk11: J) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk1, unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), effect_screen_layer, unk10.to_f32());
+    lua_args!(fighter, unk1, unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), effect_screen_layer, unk11.to_f32());
     sv_animcmd::FILL_SCREEN_MODEL_COLOR(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
