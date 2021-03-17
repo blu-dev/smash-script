@@ -680,6 +680,15 @@ pub unsafe fn FILL_SCREEN_MODEL_COLOR<
     fighter.clear_lua_stack();
 }
 
+#[inline]
+pub unsafe fn CANCEL_FILL_SCREEN<
+    A: ToF32,
+>(fighter: &mut L2CAgentBase, unk1: i32 unk2: A) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1, unk2.to_f32());
+    sv_animcmd::CANCEL_FILL_SCREEN(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
 
 #[inline]
 pub unsafe fn SA_SET(fighter: &mut L2CAgentBase, unk: i32) {
