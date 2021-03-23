@@ -136,7 +136,7 @@ pub unsafe fn FT_MOTION_RATE<F: ToF32>(fighter: &mut L2CAgentBase, rate: F) {
 #[inline]
 pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk1.to_f32(), unk2.to_f32, unk3.to_f32);
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32());
     sv_animcmd::FT_SHOOTING_ATTACK_GROUND_CHECK_NEW(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -144,7 +144,7 @@ pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW<A: ToF32, B: ToF32, C: ToF32>(
 #[inline]
 pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW_arg5<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: Hash40, unk5: Hash40) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk1.to_f32(), unk2.to_f32, unk3.to_f32, unk4, unk5);
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4, unk5);
     sv_animcmd::FT_SHOOTING_ATTACK_GROUND_CHECK_NEW_arg5(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
