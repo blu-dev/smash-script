@@ -173,6 +173,22 @@ pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(fighter: &mut L2CAgentBase, arg:
 }
 
 #[inline]
+pub unsafe fn CHECK_VALID_FINAL_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32());
+    sv_animcmd::CHECK_VALID_FINAL_START_CAMERA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn REQ_FINAL_START_CAMERA(fighter: &mut L2CAgentBase, camera: Hash40, unk: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, camera, unk);
+    sv_animcmd::REQ_FINAL_START_CAMERA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
     fighter.clear_lua_stack();
     lua_args!(fighter, article);
@@ -1018,6 +1034,17 @@ macro_rules! physics {
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::physics($fighter.lua_state_agent);
         let ret = $fighter.pop_lua_stack(1).get_bool();
+        ret
+    }
+}
+
+#[macro_export]
+macro_rules! camera {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::camera($fighter.lua_state_agent);
+        let ret = $fighter.pop_lua_stack(1).get_int();
         ret
     }
 }
