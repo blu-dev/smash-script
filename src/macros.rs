@@ -189,6 +189,14 @@ pub unsafe fn REQ_FINAL_START_CAMERA(fighter: &mut L2CAgentBase, camera: Hash40,
 }
 
 #[inline]
+pub unsafe fn REQ_FINAL_START_CAMERA_arg3(fighter: &mut L2CAgentBase, camera: Hash40, unk: bool, unk2: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, camera, unk, unk2);
+    sv_animcmd::REQ_FINAL_START_CAMERA_arg3(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
     fighter.clear_lua_stack();
     lua_args!(fighter, article);
@@ -1051,7 +1059,7 @@ macro_rules! camera {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::camera($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_int();
+        let ret = $fighter.pop_lua_stack(1).get_bool();
         ret
     }
 }
