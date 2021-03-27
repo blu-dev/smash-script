@@ -192,7 +192,7 @@ pub unsafe fn REQ_FINAL_START_CAMERA(fighter: &mut L2CAgentBase, camera: Hash40,
 pub unsafe fn REQ_FINAL_START_CAMERA_arg3(fighter: &mut L2CAgentBase, camera: Hash40, unk: bool, unk2: bool) {
     fighter.clear_lua_stack();
     lua_args!(fighter, camera, unk, unk2);
-    sv_animcmd::REQ_FINAL_START_CAMERA(fighter.lua_state_agent);
+    sv_animcmd::REQ_FINAL_START_CAMERA_arg3(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
 
