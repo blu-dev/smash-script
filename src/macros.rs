@@ -388,6 +388,21 @@ pub unsafe fn EFFECT_FOLLOW<
     fighter.clear_lua_stack();
 }
 
+pub unsafe fn EFFECT_FOLLOW_arg11<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool, unk9: i32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, effect, bone, unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8, unk9);
+    sv_animcmd::EFFECT_FOLLOW_arg11(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
 #[inline]
 pub unsafe fn EFFECT_FLW_POS<
     A: ToF32,
