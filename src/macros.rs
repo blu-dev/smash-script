@@ -196,14 +196,14 @@ pub unsafe fn REQ_FINAL_START_CAMERA_arg3(fighter: &mut L2CAgentBase, camera: Ha
     fighter.clear_lua_stack();
 }
 
-#[inline]
-pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
-    fighter.clear_lua_stack();
-    lua_args!(fighter, article);
-    let ret = sv_animcmd::IS_GENERATABLE_ARTICLE(fighter.lua_state_agent);
-    fighter.clear_lua_stack();
-    ret
-}
+// #[inline]
+// pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
+//     fighter.clear_lua_stack();
+//     lua_args!(fighter, article);
+//     let ret = sv_animcmd::IS_GENERATABLE_ARTICLE(fighter.lua_state_agent);
+//     fighter.clear_lua_stack();
+//     ret
+// }
 
 #[inline]
 pub unsafe fn CAM_ZOOM_IN_arg5(fighter: &mut L2CAgentBase, zoom_amount: f32, arg2: f32, arg3: f32, y_rot: f32, x_rot: f32) {
