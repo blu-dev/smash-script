@@ -1080,11 +1080,6 @@ macro_rules! notify_event_msc_cmd {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_battle_object::notify_event_msc_cmd($fighter.lua_state_agent);
-<<<<<<< HEAD
-        let ret = $fighter.pop_lua_stack(1).get_i32();
-        ret
-=======
         $fighter.pop_lua_stack(1)
->>>>>>> 5188110459ff302098f0bbf6b96ddad317e4dbef
     }
 }
