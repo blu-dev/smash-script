@@ -134,6 +134,29 @@ pub unsafe fn FT_MOTION_RATE<F: ToF32>(fighter: &mut L2CAgentBase, rate: F) {
 }
 
 #[inline]
+pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32());
+    sv_animcmd::FT_SHOOTING_ATTACK_GROUND_CHECK_NEW(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW_arg5<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: Hash40, unk5: Hash40) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4, unk5);
+    sv_animcmd::FT_SHOOTING_ATTACK_GROUND_CHECK_NEW_arg5(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn FT_START_CUTIN(fighter: &mut L2CAgentBase) {
+    fighter.clear_lua_stack();
+    sv_animcmd::FT_START_CUTIN(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn FT_LEAVE_NEAR_OTTOTTO<A: ToF32, B: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk1.to_f32(), unk2.to_f32());
@@ -157,6 +180,29 @@ pub unsafe fn LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT<F: ToF32>(fighter: &mut L2CA
     fighter.clear_lua_stack();
 }
 
+pub unsafe fn CHECK_VALID_FINAL_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32());
+    sv_animcmd::CHECK_VALID_FINAL_START_CAMERA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn REQ_FINAL_START_CAMERA(fighter: &mut L2CAgentBase, camera: Hash40, unk: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, camera, unk);
+    sv_animcmd::REQ_FINAL_START_CAMERA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn REQ_FINAL_START_CAMERA_arg3(fighter: &mut L2CAgentBase, camera: Hash40, unk: bool, unk2: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, camera, unk, unk2);
+    sv_animcmd::REQ_FINAL_START_CAMERA_arg3(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
 #[inline]
 pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
     fighter.clear_lua_stack();
@@ -164,6 +210,22 @@ pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -
     let ret = sv_animcmd::IS_GENERATABLE_ARTICLE(fighter.lua_state_agent);
     fighter.clear_lua_stack();
     ret
+}
+
+#[inline]
+pub unsafe fn CAM_ZOOM_IN_arg5(fighter: &mut L2CAgentBase, zoom_amount: f32, arg2: f32, arg3: f32, y_rot: f32, x_rot: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, zoom_amount, arg2, arg3, y_rot, x_rot);
+    sv_animcmd::CAM_ZOOM_IN_arg5(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn CAM_ZOOM_IN_arg6(fighter: &mut L2CAgentBase, arg1: f32, arg2: f32, arg3: f32, arg4: f32, arg5: f32, arg6: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, arg1, arg2, arg3, arg4, arg5, arg6);
+    sv_animcmd::CAM_ZOOM_IN_arg6(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
 }
 
 #[inline]
@@ -234,6 +296,13 @@ pub unsafe fn FT_SET_FINAL_FEAR_FACE(fighter: &mut L2CAgentBase, unk: u64) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk);
     sv_animcmd::FT_SET_FINAL_FEAR_FACE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn CAM_ZOOM_OUT(fighter: &mut L2CAgentBase) {
+    fighter.clear_lua_stack();
+    sv_animcmd::CAM_ZOOM_OUT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
 
@@ -323,6 +392,38 @@ pub unsafe fn EFFECT_FOLLOW<
     fighter.clear_lua_stack();
     lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
     sv_animcmd::EFFECT_FOLLOW(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn EFFECT_FLW_POS<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
+    sv_animcmd::EFFECT_FLW_POS(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn EFFECT_FLW_UNSYNC_VIS<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
+    sv_animcmd::EFFECT_FLW_UNSYNC_VIS(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
 
@@ -615,6 +716,35 @@ pub unsafe fn COL_NORMAL(fighter: &mut L2CAgentBase) {
 }
 
 #[inline]
+pub unsafe fn FILL_SCREEN_MODEL_COLOR<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32,
+    H: ToF32,
+    I: ToF32,
+    J: ToF32,
+    >(fighter: &mut L2CAgentBase, unk1: i32, unk2: A, unk3: B, unk4: C, unk5: D, unk6: E, unk7: F, unk8: G, unk9: H, unk10: I, effect_screen_layer: i32, unk11: J) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1, unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), effect_screen_layer, unk11.to_f32());
+    sv_animcmd::FILL_SCREEN_MODEL_COLOR(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn CANCEL_FILL_SCREEN<
+    A: ToF32,
+>(fighter: &mut L2CAgentBase, unk1: i32, unk2: A) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1, unk2.to_f32());
+    sv_animcmd::CANCEL_FILL_SCREEN(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn SA_SET(fighter: &mut L2CAgentBase, unk: i32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk);
@@ -741,10 +871,10 @@ pub unsafe fn AFTER_IMAGE4_ON_arg29(fighter: &mut L2CAgentBase, unk: Hash40, unk
 
 #[inline]
 pub unsafe fn EFFECT_FOLLOW_NO_STOP<
-    A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: u64, unk2: A, unk3: B, unk4: C, unk5: D, unk6: E, unk7: F, unk8: bool) {
+    A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32 , G: ToF32
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk, unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
+    lua_args!(fighter, effect, bone, unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
     sv_animcmd::EFFECT_FOLLOW_NO_STOP(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -796,6 +926,16 @@ pub unsafe fn AREA_WIND_2ND_RAD_arg9<
 }
 
 #[inline]
+pub unsafe fn AREA_WIND_2ND_arg10<
+    A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32, G: ToF32, H: ToF32, I: ToF32, J: ToF32
+    >(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I, unk10: J) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32());
+    sv_animcmd::AREA_WIND_2ND_arg10(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn FT_ADD_DAMAGE<F: ToF32>(fighter: &mut L2CAgentBase, damage: F) {
     fighter.clear_lua_stack();
     lua_args!(fighter, damage.to_f32());
@@ -818,8 +958,6 @@ pub unsafe fn RUMBLE_HIT(fighter: &mut L2CAgentBase, kind: Hash40, unk: u64) {
     sv_animcmd::RUMBLE_HIT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
-
-
 
 #[inline]
 pub unsafe fn EFFECT_DETACH_KIND(fighter: &mut L2CAgentBase, effect: Hash40, unk: i64) {
@@ -862,8 +1000,7 @@ macro_rules! grab {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::grab($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_bool();
-        ret
+        $fighter.pop_lua_stack(1)
     };
 }
 
@@ -873,8 +1010,7 @@ macro_rules! shield {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::shield($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_bool();
-        ret
+        $fighter.pop_lua_stack(1)
     }
 }
 
@@ -884,8 +1020,7 @@ macro_rules! search {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::search($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_bool();
-        ret
+        $fighter.pop_lua_stack(1)
     }
 }
 
@@ -895,8 +1030,7 @@ macro_rules! slope {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::slope($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_bool();
-        ret
+        $fighter.pop_lua_stack(1)
     }
 }
 
@@ -906,8 +1040,27 @@ macro_rules! damage {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::damage($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_i32();
-        ret
+        $fighter.pop_lua_stack(1)
+    }
+}
+
+#[macro_export]
+macro_rules! physics {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::physics($fighter.lua_state_agent);
+        $fighter.pop_lua_stack(1)
+    }
+}
+
+#[macro_export]
+macro_rules! camera {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::camera($fighter.lua_state_agent);
+        $fighter.pop_lua_stack(1)
     }
 }
 
@@ -917,8 +1070,7 @@ macro_rules! attack {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::attack($fighter.lua_state_agent);
-        let ret = $fighter.pop_lua_stack(1).get_bool();
-        ret
+        $fighter.pop_lua_stack(1)
     }
 }
 
@@ -928,7 +1080,11 @@ macro_rules! notify_event_msc_cmd {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_battle_object::notify_event_msc_cmd($fighter.lua_state_agent);
+<<<<<<< HEAD
         let ret = $fighter.pop_lua_stack(1).get_i32();
         ret
+=======
+        $fighter.pop_lua_stack(1)
+>>>>>>> 5188110459ff302098f0bbf6b96ddad317e4dbef
     }
 }
