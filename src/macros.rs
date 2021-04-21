@@ -1074,6 +1074,17 @@ macro_rules! attack {
     }
 }
 
+
+#[macro_export]
+macro_rules! effect {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::effect($fighter.lua_state_agent);
+        $fighter.pop_lua_stack(1)
+    }
+}
+
 #[macro_export]
 macro_rules! notify_event_msc_cmd {
     ($fighter: ident, $($arg:expr),* $(,)?) => {
