@@ -1065,6 +1065,16 @@ macro_rules! camera {
 }
 
 #[macro_export]
+macro_rules! capture {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::capture($fighter.lua_state_agent);
+        $fighter.pop_lua_stack(1)
+    }
+}
+
+#[macro_export]
 macro_rules! attack {
     ($fighter:ident, $($arg:expr),* $(,)?) => {
         $fighter.clear_lua_stack();
