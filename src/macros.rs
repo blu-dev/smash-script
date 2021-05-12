@@ -173,6 +173,14 @@ pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(fighter: &mut L2CAgentBase, arg:
 }
 
 #[inline]
+pub unsafe fn LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT<F: ToF32>(fighter: &mut L2CAgentBase, offset: F) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, offset.to_f32());
+    sv_animcmd::LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn CHECK_VALID_FINAL_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32());
@@ -196,14 +204,14 @@ pub unsafe fn REQ_FINAL_START_CAMERA_arg3(fighter: &mut L2CAgentBase, camera: Ha
     fighter.clear_lua_stack();
 }
 
-// #[inline]
-// pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
-//     fighter.clear_lua_stack();
-//     lua_args!(fighter, article);
-//     let ret = sv_animcmd::IS_GENERATABLE_ARTICLE(fighter.lua_state_agent);
-//     fighter.clear_lua_stack();
-//     ret
-// }
+#[inline]
+pub unsafe fn IS_GENERATABLE_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, article);
+    let ret = sv_animcmd::IS_GENERATABLE_ARTICLE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+    ret
+}
 
 #[inline]
 pub unsafe fn CAM_ZOOM_IN_arg5(fighter: &mut L2CAgentBase, zoom_amount: f32, arg2: f32, arg3: f32, y_rot: f32, x_rot: f32) {
@@ -1107,6 +1115,26 @@ macro_rules! camera {
         $fighter.clear_lua_stack();
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::camera($fighter.lua_state_agent);
+        $fighter.pop_lua_stack(1)
+    }
+}
+
+#[macro_export]
+macro_rules! capture {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::capture($fighter.lua_state_agent);
+        $fighter.pop_lua_stack(1)
+    }
+}
+
+#[macro_export]
+macro_rules! sv_kinetic_energy {
+    ($cmd_name:ident, $fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_kinetic_energy::$cmd_name($fighter.lua_state_agent);
         $fighter.pop_lua_stack(1)
     }
 }
