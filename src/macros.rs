@@ -848,6 +848,14 @@ pub unsafe fn PLAY_SE_REMAIN(fighter: &mut L2CAgentBase, se: Hash40) {
 }
 
 #[inline]
+pub unsafe fn PLAY_FLY_VOICE(fighter: &mut L2CAgentBase, se1: Hash40, se2: Hash40) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, se1, se2);
+    sv_animcmd::PLAY_FLY_VOICE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn STOP_SE(fighter: &mut L2CAgentBase, se: Hash40) {
     fighter.clear_lua_stack();
     lua_args!(fighter, se);
