@@ -1043,6 +1043,16 @@ macro_rules! grab {
 }
 
 #[macro_export]
+macro_rules! item {
+    ($fighter:ident, $($arg:expr),* $(,)?) => {
+        $fighter.clear_lua_stack();
+        lua_args!($fighter, $($arg),*);
+        smash::app::sv_module_access::item($fighter.lua_state_agent);
+        $fighter.pop_lua_stack(1)
+    };
+}
+
+#[macro_export]
 macro_rules! shield {
     ($fighter:ident, $($arg:expr),* $(,)?) => {
         $fighter.clear_lua_stack();
