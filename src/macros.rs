@@ -1039,7 +1039,7 @@ macro_rules! grab {
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::grab($fighter.lua_state_agent);
         $fighter.pop_lua_stack(1)
-    };
+    }
 }
 
 #[macro_export]
@@ -1049,7 +1049,7 @@ macro_rules! item {
         lua_args!($fighter, $($arg),*);
         smash::app::sv_module_access::item($fighter.lua_state_agent);
         $fighter.pop_lua_stack(1)
-    };
+    }
 }
 
 #[macro_export]
