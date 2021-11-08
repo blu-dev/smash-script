@@ -901,8 +901,8 @@ pub unsafe fn AFTER_IMAGE4_ON_arg29(fighter: &mut L2CAgentBase, unk: Hash40, unk
         z: f32, x_rot: f32, y_rot: f32, z_rot: u64, size: f32, unk13: u64, unk14: i32, unk15: u64, axis: i32,
         blend: u64, cull: i32, unk16: f32, unk17: f32) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk, unk2, unk3, bone, unk4, unk5, unk6, bone2, unk7, unk8, unk9, unk10, unk11, unk12, unk13, unk14, unk15, unk16);
-    lua_args!(fighter, unk17, unk18, unk19, unk20, unk21, unk22, unk23, unk24, unk25, unk26, unk27);
+    lua_args!(fighter, unk, unk2, unk3, bone, unk4, unk5, unk6, bone2, unk7, unk8, unk9, unk10, unk11, unk12, x, y, z, x_rot);
+    lua_args!(fighter, y_rot, z_rot, size, unk13, unk14, unk15, axis, blend, cull, unk16, unk17);
     sv_animcmd::AFTER_IMAGE4_ON_arg29(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
