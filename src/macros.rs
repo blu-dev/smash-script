@@ -898,7 +898,7 @@ pub unsafe fn AFTER_IMAGE_OFF<F: ToF32>(fighter: &mut L2CAgentBase, unk: F) {
 #[inline]
 pub unsafe fn AFTER_IMAGE4_ON_arg29(fighter: &mut L2CAgentBase, unk: Hash40, unk2: Hash40, unk3: u64, bone: Hash40, unk4: f32, unk5: f32,
         unk6: f32, bone2: Hash40, unk7: f32, unk8: f32, unk9: f32, unk10: bool, unk11: Hash40, unk12: Hash40, x: f32, y: f32,
-        z: f32, x_rot: f32, y_rot: f32, z_rot: u64, size: f32, unk13: u64, unk14: i32, unk15: u64, axis: i32,
+        z: f32, x_rot: f32, y_rot: f32, z_rot: f32, size: f32, unk13: u64, unk14: i32, unk15: u64, axis: i32,
         blend: u64, cull: i32, unk16: f32, unk17: f32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk, unk2, unk3, bone, unk4, unk5, unk6, bone2, unk7, unk8, unk9, unk10, unk11, unk12, x, y, z, x_rot);
