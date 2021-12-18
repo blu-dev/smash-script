@@ -498,6 +498,14 @@ pub unsafe fn LAST_EFFECT_SET_ALPHA<F: ToF32>(fighter: &mut L2CAgentBase, alpha:
 }
 
 #[inline]
+pub unsafe fn LAST_EFFECT_SET_SCALE_W<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, x: A, y: B, z: C) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, x.to_f32(), y.to_f32(), z.to_f32());
+    sv_animcmd::LAST_EFFECT_SET_SCALE_W(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn FOOT_EFFECT<
     A: ToF32,
     B: ToF32,
