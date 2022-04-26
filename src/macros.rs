@@ -389,9 +389,9 @@ pub unsafe fn EFFECT_FOLLOW<
     E: ToF32,
     F: ToF32,
     G: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8);
     sv_animcmd::EFFECT_FOLLOW(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -404,9 +404,9 @@ pub unsafe fn EFFECT_FOLLOW_arg11<
     E: ToF32,
     F: ToF32,
     G: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool, unk9: i32) {
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: bool, unk9: i32) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8, unk9);
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8, unk9);
     sv_animcmd::EFFECT_FOLLOW_arg11(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -420,9 +420,9 @@ pub unsafe fn EFFECT_FLW_POS<
     E: ToF32,
     F: ToF32,
     G: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8);
     sv_animcmd::EFFECT_FLW_POS(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -436,9 +436,9 @@ pub unsafe fn EFFECT_FLW_UNSYNC_VIS<
     E: ToF32,
     F: ToF32,
     G: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8);
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8);
     sv_animcmd::EFFECT_FLW_UNSYNC_VIS(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -458,10 +458,10 @@ pub unsafe fn LANDING_EFFECT<
     K: ToF32,
     L: ToF32,
     M: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I,
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: H, unk9: I,
     unk10: J, unk11: K, unk12: L, unk13: M, unk14: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
     sv_animcmd::LANDING_EFFECT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -481,10 +481,10 @@ pub unsafe fn LANDING_EFFECT_FLIP<
     K: ToF32,
     L: ToF32,
     M: ToF32
-    >(fighter: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I,
+    >(fighter: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: H, unk9: I,
     unk10: J, unk11: K, unk12: L, unk13: M, unk14: bool, axis: i32) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, left_effect, right_effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14, axis);
+    lua_args!(fighter, left_effect, right_effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14, axis);
     sv_animcmd::LANDING_EFFECT_FLIP(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -520,10 +520,10 @@ pub unsafe fn FOOT_EFFECT<
     K: ToF32,
     L: ToF32,
     M: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I,
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: H, unk9: I,
     unk10: J, unk11: K, unk12: L, unk13: M, unk14: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
     sv_animcmd::FOOT_EFFECT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -543,10 +543,10 @@ pub unsafe fn EFFECT<
     K: ToF32,
     L: ToF32,
     M: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I,
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: H, unk9: I,
     unk10: J, unk11: K, unk12: L, unk13: M, unk14: bool) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
     sv_animcmd::EFFECT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -566,9 +566,9 @@ pub unsafe fn EFFECT_FLIP<
     K: ToF32,	
     L: ToF32,	
     M: ToF32	
-    >(fighter: &mut L2CAgentBase, unk1: Hash40, unk2: Hash40, bone: Hash40, unk3: A, unk4: B, unk5: C, unk6: D, unk7: E, unk8: F, unk9: G, unk10: H, unk11: I, unk12: J, unk13: K, unk14: L, unk15: M, unk16: bool, axis: i32) {	
+    >(fighter: &mut L2CAgentBase, unk1: Hash40, unk2: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk10: H, unk11: I, unk12: J, unk13: K, unk14: L, unk15: M, unk16: bool, axis: i32) {	
     fighter.clear_lua_stack();	
-    lua_args!(fighter, unk1, unk2, bone, unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14.to_f32(), unk15.to_f32(), unk16, axis);	
+    lua_args!(fighter, unk1, unk2, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14.to_f32(), unk15.to_f32(), unk16, axis);	
     sv_animcmd::EFFECT_FLIP(fighter.lua_state_agent);	
     fighter.clear_lua_stack();	
 }
@@ -589,10 +589,10 @@ pub unsafe fn EFFECT_ALPHA<
     L: ToF32,
     M: ToF32,
     N: ToF32
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I,
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: H, unk9: I,
     unk10: J, unk11: K, unk12: L, unk13: M, unk14: bool, alpha: N) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14, alpha.to_f32());
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14, alpha.to_f32());
     sv_animcmd::EFFECT(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -613,10 +613,10 @@ pub unsafe fn EFFECT_FLIP_ALPHA<
     L: ToF32,
     M: ToF32,
     N: ToF32
-    >(fighter: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, size: G, unk8: H, unk9: I,
+    >(fighter: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: H, unk9: I,
     unk10: J, unk11: K, unk12: L, unk13: M, unk14: bool, axis: i32, alpha: N) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, left_effect, right_effect, bone, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14, axis, alpha.to_f32());
+    lua_args!(fighter, left_effect, right_effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14, axis, alpha.to_f32());
     sv_animcmd::EFFECT_FLIP_ALPHA(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -631,9 +631,9 @@ pub unsafe fn EFFECT_FOLLOW_ALPHA<
     F: ToF32,
     G: ToF32,
     H: ToF32,
-    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool, alpha: H) {
+    >(fighter: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: bool, alpha: H) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, effect, bone, unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8, alpha.to_f32());
+    lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8, alpha.to_f32());
     sv_animcmd::EFFECT_FOLLOW_ALPHA(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -647,9 +647,9 @@ pub unsafe fn EFFECT_FOLLOW_FLIP<
     E: ToF32,
     F: ToF32,
     G: ToF32
-    >(fighter: &mut L2CAgentBase, unk1: Hash40, unk2: Hash40, bone: Hash40, unk3: A, unk4: B, unk5: C, unk6: D, unk7: E, unk8: F, unk9: G, unk10: bool, axis: i32) {
+    >(fighter: &mut L2CAgentBase, right_effect: Hash40, left_effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk10: bool, axis: i32) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk1, unk2, bone, unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10, axis);
+    lua_args!(fighter, right_effect, left_effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk10, axis);
     sv_animcmd::EFFECT_FOLLOW_FLIP(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
@@ -664,10 +664,10 @@ pub unsafe fn EFFECT_FOLLOW_FLIP_ALPHA<
     F: ToF32,
     G: ToF32,
     H: ToF32
-    >(fighter: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, unk3: A, unk4: B, unk5: C, unk6: D, unk7: E, unk8: F, size: G, unk10: bool, 
+    >(fighter: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk10: bool, 
     axis: i32, alpha: H) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, left_effect, right_effect, bone, unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7.to_f32(), unk8.to_f32(), size.to_f32(),
+    lua_args!(fighter, left_effect, right_effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(),
     unk10, axis, alpha.to_f32());
     sv_animcmd::EFFECT_FOLLOW_FLIP_ALPHA(fighter.lua_state_agent);
     fighter.clear_lua_stack();
@@ -904,25 +904,25 @@ pub unsafe fn AFTER_IMAGE_OFF<F: ToF32>(fighter: &mut L2CAgentBase, unk: F) {
 }
 
 #[inline]
-pub unsafe fn AFTER_IMAGE4_ON_arg29(fighter: &mut L2CAgentBase, unk: Hash40, unk2: Hash40, unk3: u64, bone: Hash40, unk4: f32, unk5: f32,
-        unk6: f32, bone2: Hash40, unk7: f32, unk8: f32, unk9: f32, unk10: bool, unk11: Hash40, unk12: Hash40, x: f32, y: f32,
-        z: f32, x_rot: f32, y_rot: f32, z_rot: f32, size: f32, unk13: u64, unk14: i32, unk15: u64, axis: i32,
+pub unsafe fn AFTER_IMAGE4_ON_arg29(fighter: &mut L2CAgentBase, trail1: Hash40, trail2: Hash40, trail_length: u64, trail_bone1: Hash40, trail_x1: f32, trail_y1: f32,
+        trail_z1: f32, trail_bone2: Hash40, trail_x2: f32, trail_y2: f32, trail_z2: f32, unk10: bool, flare: Hash40, flare_bone: Hash40, flare_x: f32, flare_y: f32,
+        flare_z: f32, flare_x_rot: f32, flare_y_rot: f32, flare_z_rot: f32, flare_size: f32, unk13: u64, axis: i32, unk15: u64, trail_blend: i32,
         blend: u64, cull: i32, unk16: f32, unk17: f32) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk, unk2, unk3, bone, unk4, unk5, unk6, bone2, unk7, unk8, unk9, unk10, unk11, unk12, x, y, z, x_rot);
-    lua_args!(fighter, y_rot, z_rot, size, unk13, unk14, unk15, axis, blend, cull, unk16, unk17);
+    lua_args!(fighter, trail1, trail2, trail_length, trail_bone1, trail_x1, trail_y1, trail_z1, trail_bone2, trail_x2, trail_y2, trail_z2, unk10, flare, flare_bone, flare_x, flare_y, flare_z, flare_x_rot);
+    lua_args!(fighter, flare_y_rot, flare_z_rot, flare_size, unk13, axis, unk15, trail_blend, blend, cull, unk16, unk17);
     sv_animcmd::AFTER_IMAGE4_ON_arg29(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
 
 #[inline]
-pub unsafe fn AFTER_IMAGE4_ON_WORK_arg29(fighter: &mut L2CAgentBase, unk: i32, unk2: i32, unk3: u64, bone: Hash40, unk4: f32, unk5: f32,
-        unk6: f32, bone2: Hash40, unk7: f32, unk8: f32, unk9: f32, unk10: bool, unk11: i32, unk12: Hash40, unk13: u64, unk14: u64,
-        unk15: u64, unk16: u64, unk17: u64, unk18: u64, unk19: u64, unk20: u64, unk21: i32, unk22: u64, unk23: i32,
-        unk24: u64, unk25: i32, unk26: f32, unk27: f32) {
+pub unsafe fn AFTER_IMAGE4_ON_WORK_arg29(fighter: &mut L2CAgentBase, trail1: i32, trail2: i32, trail_length: u64, trail_bone1: Hash40, trail_x1: f32, trail_y1: f32,
+        trail_z1: f32, trail_bone2: Hash40, trail_x2: f32, trail_y2: f32, trail_z2: f32, unk10: bool, flare: i32, flare_bone: Hash40, flare_x: f32, flare_y: f32,
+        flare_z: f32, flare_x_rot: f32, flare_y_rot: f32, flare_z_rot: f32, flare_size: f32, unk13: u64, axis: i32, unk15: u64, trail_blend: i32,
+        blend: u64, cull: i32, unk16: f32, unk17: f32) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, unk, unk2, unk3, bone, unk4, unk5, unk6, bone2, unk7, unk8, unk9, unk10, unk11, unk12, unk13, unk14, unk15, unk16);
-    lua_args!(fighter, unk17, unk18, unk19, unk20, unk21, unk22, unk23, unk24, unk25, unk26, unk27);
+    lua_args!(fighter, trail1, trail2, trail_length, trail_bone1, trail_x1, trail_y1, trail_z1, trail_bone2, trail_x2, trail_y2, trail_z2, unk10, flare, flare_bone, flare_x, flare_y, flare_z, flare_x_rot);
+    lua_args!(fighter, flare_y_rot, flare_z_rot, flare_size, unk13, axis, unk15, trail_blend, blend, cull, unk16, unk17);
     sv_animcmd::AFTER_IMAGE4_ON_WORK_arg29(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
