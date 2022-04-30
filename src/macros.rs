@@ -380,11 +380,10 @@ pub unsafe fn FLASH_FRM<
     A: ToF32,
     B: ToF32,
     C: ToF32,
-    D: ToF32,
-    E: ToF32
-    >(fighter: &mut L2CAgentBase, frame: A, unk: B, unk2: C, unk3: D, unk4: E) {
+    D: ToF32
+    >(fighter: &mut L2CAgentBase, frame: u64, unk: A, unk2: B, unk3: C, unk4: D) {
     fighter.clear_lua_stack();
-    lua_args!(fighter, frame.to_f32(), unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32());
+    lua_args!(fighter, frame, unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32());
     sv_animcmd::FLASH(fighter.lua_state_agent);
     fighter.clear_lua_stack();
 }
