@@ -134,6 +134,22 @@ pub unsafe fn FT_MOTION_RATE<F: ToF32>(fighter: &mut L2CAgentBase, rate: F) {
 }
 
 #[inline]
+pub unsafe fn FT_DESIRED_RATE(fighter: &mut L2CAgentBase, motion_frames: f32, game_frames: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, (game_frames / motion_frames));
+    sv_animcmd::FT_MOTION_RATE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn FT_DESIRED_RATE2(fighter: &mut L2CAgentBase, motion_start_frame: f32, motion_end_frame: f32, game_frames: f32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, (game_frames / (motion_end_frame / motion_start_frame)));
+    sv_animcmd::FT_MOTION_RATE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW<A: ToF32, B: ToF32, C: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32());
