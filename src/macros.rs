@@ -269,7 +269,7 @@ pub unsafe fn HIT_RESET_ALL(fighter: &mut L2CAgentBase) {
 }
 
 #[inline]
-pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter: &mut L2CAgentBase, unk: u64, unk2: u64, unk3: f32) {
+pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg3 <A: ToF32> (fighter: &mut L2CAgentBase, unk: u64, unk2: A, unk3: f32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk, unk2, unk3);
     sv_animcmd::ATK_SET_SHIELD_SETOFF_MUL_arg3(fighter.lua_state_agent);
