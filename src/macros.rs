@@ -431,7 +431,7 @@ pub unsafe fn EFFECT_FOLLOW_WORK<
     F: ToF32,
     G: ToF32
     >(fighter: &mut L2CAgentBase, effect_const: i64, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: bool) {
-    let effect = WorkModule::get_int64(fighter.module_accessor, effect_const);
+    let effect = lua_bind::WorkModule::get_int64(fighter.module_accessor, effect_const);
     fighter.clear_lua_stack();
     lua_args!(fighter, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8);
     sv_animcmd::EFFECT_FOLLOW_WORK(fighter.lua_state_agent);
@@ -815,7 +815,7 @@ pub unsafe fn EFFECT_OFF_KIND(fighter: &mut L2CAgentBase, effect: Hash40, unk: b
 
 #[inline]
 pub unsafe fn EFFECT_OFF_KIND_WORK(fighter: &mut L2CAgentBase, effect_const: i32, unk: bool, unk2: bool) {
-    let effect = WorkModule::get_int64(fighter.module_accessor, effect_const);
+    let effect = lua_bind::WorkModule::get_int64(fighter.module_accessor, effect_const);
     fighter.clear_lua_stack();
     lua_args!(fighter, effect, unk, unk2);
     sv_animcmd::EFFECT_OFF_KIND_WORK(fighter.lua_state_agent);
