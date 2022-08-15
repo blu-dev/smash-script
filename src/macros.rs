@@ -3,7 +3,7 @@ use smash::lib::L2CValue;
 use smash::lua2cpp::L2CAgentBase;
 use smash::phx::Hash40;
 
-use smash::app::sv_animcmd;
+use smash::app::{sv_animcmd, lua_bind};
 use smash::lib::lua_const::*;
 
 pub trait ToF32 {
