@@ -947,6 +947,14 @@ pub unsafe fn PLAY_STEP(fighter: &mut L2CAgentBase, step: Hash40) {
 }
 
 #[inline]
+pub unsafe fn PLAY_STEP_FLIPPABLE(fighter: &mut L2CAgentBase, step: Hash40, step2: Hash40) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, step, step2);
+    sv_animcmd::PLAY_STEP_FLIPPABLE(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn PLAY_SEQUENCE(fighter: &mut L2CAgentBase, sequence: Hash40) {
     fighter.clear_lua_stack();
     lua_args!(fighter, sequence);
