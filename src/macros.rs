@@ -181,7 +181,7 @@ pub unsafe fn FT_LEAVE_NEAR_OTTOTTO<A: ToF32, B: ToF32>(fighter: &mut L2CAgentBa
 }
 
 #[inline]
-pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(fighter: &mut L2CAgentBase, arg: u64) {
+pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(fighter: &mut L2CAgentBase, arg: f32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, arg);
     sv_animcmd::FT_START_ADJUST_MOTION_FRAME_arg1(fighter.lua_state_agent);
