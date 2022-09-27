@@ -197,6 +197,14 @@ pub unsafe fn LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT<F: ToF32>(fighter: &mut L2CA
 }
 
 #[inline]
+pub unsafe fn CHECK_VALID_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7);
+    sv_animcmd::CHECK_VALID_START_CAMERA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn CHECK_VALID_FINAL_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F) {
     fighter.clear_lua_stack();
     lua_args!(fighter, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32());
