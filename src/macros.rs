@@ -1129,6 +1129,14 @@ pub unsafe fn SEARCH(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash4
 }
 
 #[inline]
+pub unsafe fn ADD_SPEED_NO_LIMIT<X: ToF32, Y: ToF32>(fighter: &mut L2CAgentBase, x_speed: X, y_speed: Y) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, x_speed.to_f32(), y_speed.to_f32());
+    sv_animcmd::ADD_SPEED_NO_LIMIT(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn game_CaptureCutCommon(fighter: &mut L2CAgentBase) {
     fighter.clear_lua_stack();
     lua_args!(fighter, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
