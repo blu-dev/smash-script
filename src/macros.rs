@@ -213,6 +213,14 @@ pub unsafe fn CHECK_VALID_FINAL_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: To
 }
 
 #[inline]
+pub unsafe fn REQ_MOTION_CAMERA(fighter: &mut L2CAgentBase, camera: Hash40, unk: bool) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, camera, unk);
+    sv_animcmd::REQ_MOTION_CAMERA(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn REQ_FINAL_START_CAMERA(fighter: &mut L2CAgentBase, camera: Hash40, unk: bool) {
     fighter.clear_lua_stack();
     lua_args!(fighter, camera, unk);
