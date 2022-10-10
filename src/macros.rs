@@ -134,7 +134,7 @@ pub unsafe fn FT_DESIRED_RATE(fighter: &mut L2CAgentBase, motion_frames: f32, ga
 }
 
 #[inline]
-pub unsafe fn FT_DESIRED_RATE2(fighter: &mut L2CAgentBase, motion_start_frame: f32, motion_end_frame: f32, game_frames: f32) {
+pub unsafe fn FT_MOTION_RATE_RANGE(fighter: &mut L2CAgentBase, motion_start_frame: f32, motion_end_frame: f32, game_frames: f32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, (game_frames / (motion_end_frame - motion_start_frame)));
     sv_animcmd::FT_MOTION_RATE(fighter.lua_state_agent);
