@@ -92,6 +92,19 @@ pub unsafe fn ATK_POWER<F: ToF32>(fighter: &mut L2CAgentBase, id: u64, power: F)
 }
 
 #[inline]
+pub unsafe fn ATTACK_FP<A: ToF32, B: ToF32, C: ToF32, D: ToF32>(fighter: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: D, fkb: i32, bkb: i32, size: C, x: f32, y: f32, z: f32,
+                    effect: Hash40, trip: f32, hitlag: f32, sdi: f32, clang: bool, rebound: bool, shield_damage: A, sfx_level: i32, collision_sound: i32, ground_air: i32, direct: bool, _type: i32, hitbits: i32, unk1: bool,
+                    collision_part: i32, unk2: bool, blockable: bool, reflectable: bool, absorbable: bool, rehit: B, ignore_invuln: bool, unk3: bool, facing: i32, unk4: bool, friendly_fire: bool, disable_hitlag: bool,
+                    no_gfx: bool, flinchless: bool, collision_shape: i32) {
+    fighter.clear_lua_stack();
+    lua_args!(
+        fighter, id, part, bone, damage, angle, kbg.to_f32(), fkb, bkb, size.to_f32(), x, y, z, effect, trip, hitlag, sdi, clang, rebound, shield_damage.to_f32(), sfx_level, collision_sound, ground_air,
+        direct, _type, hitbits, unk1, collision_part, unk2, blockable, reflectable, absorbable, rehit.to_f32(), ignore_invuln, unk3, facing, unk4, friendly_fire, disable_hitlag, no_gfx, flinchless, collision_shape
+    );
+    sv_animcmd::ATTACK_FP(fighter.lua_state_agent);
+}
+
+#[inline]
 pub unsafe fn ATTACK_ABS(fighter: &mut L2CAgentBase, kind: i32, id: u64, damage: f32, angle: u64, kbg: i32, fkb: i32, bkb: i32, hitlag: f32,
                         unk: f32, facing: i32, unk2: f32, unk3: bool, effect: Hash40, sfx_level: i32, sfx_type: i32, _type: i32) {
     fighter.clear_lua_stack();
