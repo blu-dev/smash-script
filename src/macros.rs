@@ -139,6 +139,14 @@ pub unsafe fn CATCH(fighter: &mut L2CAgentBase, id: i32, bone: Hash40, size: f32
 }
 
 #[inline]
+pub unsafe fn FT_CATCH_STOP<A: ToF32, B: ToF32>(fighter: &mut L2CAgentBase, unk1: A, unk2: B) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, unk1.to_f32(), unk2.to_f32());
+    sv_animcmd::FT_CATCH_STOP(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn FT_DESIRED_RATE(fighter: &mut L2CAgentBase, motion_frames: f32, game_frames: f32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, (game_frames / motion_frames));
