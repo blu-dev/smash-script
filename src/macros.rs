@@ -128,6 +128,15 @@ pub unsafe fn is_excute(fighter: &mut L2CAgentBase) -> bool {
 }
 
 #[inline]
+pub unsafe fn IS_EXIST_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, article);
+    sv_animcmd::IS_EXIST_ARTICLE(fighter.lua_state_agent);
+    let ret = fighter.pop_lua_stack(1).get_bool();
+    ret
+}
+
+#[inline]
 pub unsafe fn CATCH(fighter: &mut L2CAgentBase, id: i32, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, status: i32, situation: i32) {
     fighter.clear_lua_stack();
     lua_args!(fighter, id, bone, size, x, y, z);
