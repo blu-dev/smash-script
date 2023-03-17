@@ -131,9 +131,7 @@ pub unsafe fn is_excute(fighter: &mut L2CAgentBase) -> bool {
 pub unsafe fn IS_EXIST_ARTICLE(fighter: &mut L2CAgentBase, article: i32) -> bool {
     fighter.clear_lua_stack();
     lua_args!(fighter, article);
-    sv_animcmd::IS_EXIST_ARTICLE(fighter.lua_state_agent);
-    let ret = fighter.pop_lua_stack(1).get_bool();
-    ret
+    sv_animcmd::IS_EXIST_ARTICLE(fighter.lua_state_agent)
 }
 
 #[inline]
