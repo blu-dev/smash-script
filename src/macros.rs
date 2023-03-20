@@ -1145,6 +1145,15 @@ pub unsafe fn EFFECT_DETACH_KIND(fighter: &mut L2CAgentBase, effect: Hash40, unk
 }
 
 #[inline]
+pub unsafe fn EFFECT_DETACH_KIND_WORK(fighter: &mut L2CAgentBase, effect_const: i32, unk: i64) {
+    let effect = lua_bind::WorkModule::get_int64(fighter.module_accessor, effect_const);
+    fighter.clear_lua_stack();
+    lua_args!(fighter, effect, unk);
+    sv_animcmd::EFFECT_DETACH_KIND_WORK(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn REVERSE_LR(fighter: &mut L2CAgentBase) {
     fighter.clear_lua_stack();
     sv_animcmd::REVERSE_LR(fighter.lua_state_agent);
