@@ -1182,6 +1182,14 @@ pub unsafe fn ADD_SPEED_NO_LIMIT<X: ToF32, Y: ToF32>(fighter: &mut L2CAgentBase,
 }
 
 #[inline]
+pub unsafe fn THROW_ITEM_arg3(fighter: &mut L2CAgentBase, angle: i32, speed: i32, power: i32) {
+    fighter.clear_lua_stack();
+    lua_args!(fighter, angle, speed, power);
+    sv_animcmd::THROW_ITEM_arg3(fighter.lua_state_agent);
+    fighter.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn game_CaptureCutCommon(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         fighter.clear_lua_stack();
