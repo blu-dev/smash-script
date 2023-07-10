@@ -445,7 +445,7 @@ pub unsafe fn FLASH_FRM<
     >(agent: &mut L2CAgentBase, frame: A, unk: B, unk2: C, unk3: D, unk4: E) {
     agent.clear_lua_stack();
     lua_args!(agent, frame.to_f32(), unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32());
-    sv_animcmd::FLASH(agent.lua_state_agent);
+    sv_animcmd::FLASH_FRM(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
@@ -816,7 +816,7 @@ pub unsafe fn BURN_COLOR<
 >(agent: &mut L2CAgentBase, unk: A, unk2: B, unk3: C, unk4: D) {
     agent.clear_lua_stack();
     lua_args!(agent, unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32());
-    sv_animcmd::LAST_EFFECT_SET_COLOR(agent.lua_state_agent);
+    sv_animcmd::BURN_COLOR(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
@@ -830,7 +830,7 @@ pub unsafe fn BURN_COLOR_FRAME<
 >(agent: &mut L2CAgentBase, frame: A, unk: B, unk2: C, unk3: D, unk4: E) {
     agent.clear_lua_stack();
     lua_args!(agent, frame.to_f32(), unk.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32());
-    sv_animcmd::LAST_EFFECT_SET_COLOR(agent.lua_state_agent);
+    sv_animcmd::BURN_COLOR_FRAME(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
