@@ -1203,7 +1203,7 @@ pub unsafe fn game_CaptureCutCommon(agent: &mut L2CAgentBase) {
 pub unsafe fn wait_loop_clear(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::wait_loop_clear(agent.lua_state_agent);
-    agent.clear_lua_stack();
+    agent.pop_lua_stack(1);
 }
 
 #[macro_export]
