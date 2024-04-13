@@ -62,7 +62,7 @@ pub unsafe fn ATTACK<A: ToF32, B: ToF32, C: ToF32, D: ToF32>(agent: &mut L2CAgen
     if let Some(z2) = z2 { lua_args!(agent, z2); } else { agent.push_lua_stack(&mut L2CValue::new()); }
     lua_args!(agent, hitlag, sdi, clang, facing, set_weight);
     let dmg = shield_damage.to_f32();
-    if (dmg.is_nan()) { agent.push_lua_stack(&mut Hash40::new("no").into()); } else { agent.push_lua_stack(&mut dmg.into()); }
+    if dmg.is_nan() { agent.push_lua_stack(&mut Hash40::new("no").into()); } else { agent.push_lua_stack(&mut dmg.into()); }
     lua_args!(agent, trip, rehit.to_f32(), reflectable, absorbable, flinchless, disable_hitlag, direct, ground_air, hitbits, collision_part, friendly_fire, effect, sfx_level, collision_sound, _type);
     sv_animcmd::ATTACK(agent.lua_state_agent);
 }
@@ -78,7 +78,7 @@ pub unsafe fn ATTACK_IGNORE_THROW<A: ToF32, B: ToF32, C: ToF32>(agent: &mut L2CA
     if let Some(z2) = z2 { lua_args!(agent, z2); } else { agent.push_lua_stack(&mut L2CValue::new()); }
     lua_args!(agent, hitlag, sdi, clang, facing, set_weight);
     let dmg = shield_damage.to_f32();
-    if (dmg.is_nan()) { agent.push_lua_stack(&mut Hash40::new("no").into()); } else { agent.push_lua_stack(&mut dmg.into()); }
+    if dmg.is_nan() { agent.push_lua_stack(&mut Hash40::new("no").into()); } else { agent.push_lua_stack(&mut dmg.into()); }
     lua_args!(agent, trip, rehit.to_f32(), reflectable, absorbable, flinchless, disable_hitlag, direct, ground_air, hitbits, collision_part, friendly_fire, effect, sfx_level, collision_sound, _type);
     sv_animcmd::ATTACK_IGNORE_THROW(agent.lua_state_agent);
 }
@@ -1023,13 +1023,13 @@ pub unsafe fn AFTER_IMAGE_OFF<F: ToF32>(agent: &mut L2CAgentBase, unk: F) {
 }
 
 #[inline]
-pub unsafe fn AFTER_IMAGE4_ON_arg29(agent: &mut L2CAgentBase, trail1: Hash40, trail2: Hash40, trail_length: u64, trail_bone1: Hash40, trail_x1: f32, trail_y1: f32,
-        trail_z1: f32, trail_bone2: Hash40, trail_x2: f32, trail_y2: f32, trail_z2: f32, unk10: bool, flare: Hash40, flare_bone: Hash40, flare_x: f32, flare_y: f32,
-        flare_z: f32, flare_x_rot: f32, flare_y_rot: f32, flare_z_rot: f32, flare_size: f32, unk13: u64, axis: i32, unk15: u64, trail_blend: i32,
+pub unsafe fn AFTER_IMAGE4_ON_arg29<A: ToF32>(agent: &mut L2CAgentBase, trail1: Hash40, trail2: Hash40, trail_length: u64, trail_bone1: Hash40, trail_x1: A, trail_y1: A,
+        trail_z1: A, trail_bone2: Hash40, trail_x2: A, trail_y2: A, trail_z2: A, unk10: bool, flare: Hash40, flare_bone: Hash40, flare_x: A, flare_y: A,
+        flare_z: A, flare_x_rot: A, flare_y_rot: A, flare_z_rot: A, flare_size: A, unk13: u64, axis: i32, unk15: u64, trail_blend: i32,
         blend: u64, cull: i32, unk16: f32, unk17: f32) {
     agent.clear_lua_stack();
-    lua_args!(agent, trail1, trail2, trail_length, trail_bone1, trail_x1, trail_y1, trail_z1, trail_bone2, trail_x2, trail_y2, trail_z2, unk10, flare, flare_bone, flare_x, flare_y, flare_z, flare_x_rot);
-    lua_args!(agent, flare_y_rot, flare_z_rot, flare_size, unk13, axis, unk15, trail_blend, blend, cull, unk16, unk17);
+    lua_args!(agent, trail1, trail2, trail_length, trail_bone1, trail_x1.to_f32(), trail_y1.to_f32(), trail_z1.to_f32(), trail_bone2, trail_x2.to_f32(), trail_y2.to_f32(), trail_z2.to_f32());
+    lua_args!(agent, unk10, flare, flare_bone, flare_x.to_f32(), flare_y.to_f32(), flare_z.to_f32(), flare_x_rot.to_f32(), flare_y_rot.to_f32(), flare_z_rot.to_f32(), flare_size.to_f32(), unk13, axis, unk15, trail_blend, blend, cull, unk16, unk17);
     sv_animcmd::AFTER_IMAGE4_ON_arg29(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
