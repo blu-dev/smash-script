@@ -1023,9 +1023,23 @@ pub unsafe fn AFTER_IMAGE_OFF<F: ToF32>(agent: &mut L2CAgentBase, unk: F) {
 }
 
 #[inline]
-pub unsafe fn AFTER_IMAGE4_ON_arg29<A: ToF32>(agent: &mut L2CAgentBase, trail1: Hash40, trail2: Hash40, trail_length: u64, trail_bone1: Hash40, trail_x1: A, trail_y1: A,
-        trail_z1: A, trail_bone2: Hash40, trail_x2: A, trail_y2: A, trail_z2: A, unk10: bool, flare: Hash40, flare_bone: Hash40, flare_x: A, flare_y: A,
-        flare_z: A, flare_x_rot: A, flare_y_rot: A, flare_z_rot: A, flare_size: A, unk13: u64, axis: i32, unk15: u64, trail_blend: i32,
+pub unsafe fn AFTER_IMAGE4_ON_arg29<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32,
+    H: ToF32,
+    I: ToF32,
+    J: ToF32,
+    K: ToF32,
+    L: ToF32,
+    M: ToF32
+>(agent: &mut L2CAgentBase, trail1: Hash40, trail2: Hash40, trail_length: u64, trail_bone1: Hash40, trail_x1: A, trail_y1: B,
+        trail_z1: C, trail_bone2: Hash40, trail_x2: D, trail_y2: E, trail_z2: F, unk10: bool, flare: Hash40, flare_bone: Hash40, flare_x: G, flare_y: H,
+        flare_z: I, flare_x_rot: J, flare_y_rot: K, flare_z_rot: L, flare_size: M, unk13: u64, axis: i32, unk15: u64, trail_blend: i32,
         blend: u64, cull: i32, unk16: f32, unk17: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, trail1, trail2, trail_length, trail_bone1, trail_x1.to_f32(), trail_y1.to_f32(), trail_z1.to_f32(), trail_bone2, trail_x2.to_f32(), trail_y2.to_f32(), trail_z2.to_f32());
