@@ -491,8 +491,9 @@ pub unsafe fn EFFECT_FOLLOW_arg11<
     F: ToF32,
     G: ToF32
     >(agent: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: bool, unk9: i32) {
+    let color = WorkModule::get_int64(agent.module_accessor, unk9);
     agent.clear_lua_stack();
-    lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8, unk9);
+    lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8, color);
     sv_animcmd::EFFECT_FOLLOW_arg11(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
