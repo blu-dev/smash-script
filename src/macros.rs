@@ -201,6 +201,13 @@ pub unsafe fn FT_START_CUTIN(agent: &mut L2CAgentBase) {
 }
 
 #[inline]
+pub unsafe fn START_INFO_FLASH_EYE(agent: &mut L2CAgentBase) {
+    agent.clear_lua_stack();
+    sv_animcmd::START_INFO_FLASH_EYE(agent.lua_state_agent);
+    agent.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn FT_LEAVE_NEAR_OTTOTTO<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, unk1: A, unk2: B) {
     agent.clear_lua_stack();
     lua_args!(agent, unk1.to_f32(), unk2.to_f32());
