@@ -344,6 +344,14 @@ pub unsafe fn QUAKE(agent: &mut L2CAgentBase, kind: i32) {
 }
 
 #[inline]
+pub unsafe fn FT_ATTACK_ABS_CAMERA_QUAKE(agent: &mut L2CAgentBase, attack_abs_kind: i32, quake_kind: i32) {
+    agent.clear_lua_stack();
+    lua_args!(agent, attack_abs_kind, quake_kind);
+    sv_animcmd::FT_ATTACK_ABS_CAMERA_QUAKE(agent.lua_state_agent);
+    agent.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn SET_SPEED_EX<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, speed_x: A, speed_y: B, kinetic_kind: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, speed_x.to_f32(), speed_y.to_f32(), kinetic_kind);
@@ -486,6 +494,30 @@ pub unsafe fn EFFECT_FOLLOW_WORK<
     agent.clear_lua_stack();
     lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8);
     sv_animcmd::EFFECT_FOLLOW_WORK(agent.lua_state_agent);
+    agent.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn EFFECT_FOLLOW_RND_WORK<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32,
+    H: ToF32,
+    I: ToF32,
+    J: ToF32,
+    K: ToF32,
+    L: ToF32,
+    M: ToF32
+    >(agent: &mut L2CAgentBase, effect_const: i32, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, x_pos_range: H, y_pos_range: I,
+    z_pos_range: J, x_rot_range: K, y_rot_range: L, z_rot_range: M, unk14: bool) {
+    let effect = lua_bind::WorkModule::get_int64(agent.module_accessor, effect_const);
+    agent.clear_lua_stack();
+    lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), x_pos_range.to_f32(), y_pos_range.to_f32(), z_pos_range.to_f32(), x_rot_range.to_f32(), y_rot_range.to_f32(), z_rot_range.to_f32(), unk14);
+    sv_animcmd::EFFECT_FOLLOW_RND_WORK(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
@@ -642,6 +674,30 @@ pub unsafe fn EFFECT<
     agent.clear_lua_stack();
     lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
     sv_animcmd::EFFECT(agent.lua_state_agent);
+    agent.clear_lua_stack();
+}
+
+#[inline]
+pub unsafe fn EFFECT_WORK<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32,
+    H: ToF32,
+    I: ToF32,
+    J: ToF32,
+    K: ToF32,
+    L: ToF32,
+    M: ToF32
+    >(agent: &mut L2CAgentBase, effect_const: i32, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk8: H, unk9: I,
+    unk10: J, unk11: K, unk12: L, unk13: M, unk14: bool) {
+    let effect = lua_bind::WorkModule::get_int64(agent.module_accessor, effect_const);
+    agent.clear_lua_stack();
+    lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8.to_f32(), unk9.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14);
+    sv_animcmd::EFFECT_WORK(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
