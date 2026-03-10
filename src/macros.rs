@@ -281,6 +281,15 @@ pub unsafe fn IS_GENERATABLE_ARTICLE(agent: &mut L2CAgentBase, article: i32) -> 
 }
 
 #[inline]
+pub unsafe fn SET_RATE_ARTICLE<A: ToF32>(agent: &mut L2CAgentBase, article: i32, rate: A) {
+    agent.clear_lua_stack();
+    lua_args!(agent, article, rate.to_f32());
+    let ret = sv_animcmd::SET_RATE_ARTICLE(agent.lua_state_agent);
+    agent.clear_lua_stack();
+    ret
+}
+
+#[inline]
 pub unsafe fn CAM_ZOOM_IN_arg5(agent: &mut L2CAgentBase, zoom_amount: f32, arg2: f32, arg3: f32, y_rot: f32, x_rot: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, zoom_amount, arg2, arg3, y_rot, x_rot);
@@ -701,26 +710,26 @@ pub unsafe fn EFFECT_WORK<
     agent.clear_lua_stack();
 }
 
-#[inline]	
-pub unsafe fn EFFECT_FLIP<	
-    A: ToF32,	
-    B: ToF32,	
-    C: ToF32,	
-    D: ToF32,	
-    E: ToF32,	
-    F: ToF32,	
-    G: ToF32,	
-    H: ToF32,	
-    I: ToF32,	
-    J: ToF32,	
-    K: ToF32,	
-    L: ToF32,	
-    M: ToF32	
-    >(agent: &mut L2CAgentBase, unk1: Hash40, unk2: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk10: H, unk11: I, unk12: J, unk13: K, unk14: L, unk15: M, unk16: bool, axis: i32) {	
-    agent.clear_lua_stack();	
-    lua_args!(agent, unk1, unk2, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14.to_f32(), unk15.to_f32(), unk16, axis);	
-    sv_animcmd::EFFECT_FLIP(agent.lua_state_agent);	
-    agent.clear_lua_stack();	
+#[inline]
+pub unsafe fn EFFECT_FLIP<
+    A: ToF32,
+    B: ToF32,
+    C: ToF32,
+    D: ToF32,
+    E: ToF32,
+    F: ToF32,
+    G: ToF32,
+    H: ToF32,
+    I: ToF32,
+    J: ToF32,
+    K: ToF32,
+    L: ToF32,
+    M: ToF32
+    >(agent: &mut L2CAgentBase, unk1: Hash40, unk2: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk10: H, unk11: I, unk12: J, unk13: K, unk14: L, unk15: M, unk16: bool, axis: i32) {
+    agent.clear_lua_stack();
+    lua_args!(agent, unk1, unk2, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk10.to_f32(), unk11.to_f32(), unk12.to_f32(), unk13.to_f32(), unk14.to_f32(), unk15.to_f32(), unk16, axis);
+    sv_animcmd::EFFECT_FLIP(agent.lua_state_agent);
+    agent.clear_lua_stack();
 }
 
 #[inline]
@@ -814,7 +823,7 @@ pub unsafe fn EFFECT_FOLLOW_FLIP_ALPHA<
     F: ToF32,
     G: ToF32,
     H: ToF32
-    >(agent: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk10: bool, 
+    >(agent: &mut L2CAgentBase, left_effect: Hash40, right_effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, unk10: bool,
     axis: i32, alpha: H) {
     agent.clear_lua_stack();
     lua_args!(agent, left_effect, right_effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(),
@@ -1239,7 +1248,7 @@ pub unsafe fn REVERSE_LR(agent: &mut L2CAgentBase) {
 }
 
 #[inline]
-pub unsafe fn SEARCH(agent: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, 
+pub unsafe fn SEARCH(agent: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>,
     collision: i32, hit_status: i32, unk: u64, ground_air: i32, collision_category: i32, collision_parts: i32, unk2: bool) {
     agent.clear_lua_stack();
     lua_args!(agent, id, part, bone, size, x, y, z);
