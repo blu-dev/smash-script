@@ -1247,6 +1247,14 @@ pub unsafe fn RUMBLE_HIT(agent: &mut L2CAgentBase, kind: Hash40, unk: u64) {
 }
 
 #[inline]
+pub unsafe fn RUMBLE_ALL(agent: &mut L2CAgentBase, kind: Hash40, unk: u64) {
+    agent.clear_lua_stack();
+    lua_args!(agent, kind, unk);
+    sv_animcmd::RUMBLE_ALL(agent.lua_state_agent);
+    agent.clear_lua_stack();
+}
+
+#[inline]
 pub unsafe fn EFFECT_DETACH_KIND(agent: &mut L2CAgentBase, effect: Hash40, unk: i64) {
     agent.clear_lua_stack();
     lua_args!(agent, effect, unk);
