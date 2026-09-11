@@ -51,7 +51,7 @@ macro_rules! lua_args {
     };
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATTACK<A: ToF32, B: ToF32, C: ToF32, D: ToF32>(agent: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: D, fkb: i32, bkb: i32, size: C, x: f32, y: f32, z: f32,
                     x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: A, trip: f32, rehit: B, reflectable: bool,
                     absorbable: bool, flinchless: bool, disable_hitlag: bool, direct: bool, ground_air: i32, hitbits: i32, collision_part: i32, friendly_fire: bool, effect: Hash40, sfx_level: i32, collision_sound: i32, _type: i32) {
@@ -67,7 +67,7 @@ pub unsafe fn ATTACK<A: ToF32, B: ToF32, C: ToF32, D: ToF32>(agent: &mut L2CAgen
     sv_animcmd::ATTACK(agent.lua_state_agent);
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATTACK_IGNORE_THROW<A: ToF32, B: ToF32, C: ToF32>(agent: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: i32, fkb: i32, bkb: i32, size: C, x: f32, y: f32, z: f32,
                     x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, hitlag: f32, sdi: f32, clang: i32, facing: i32, set_weight: bool, shield_damage: A, trip: f32, rehit: B, reflectable: bool,
                     absorbable: bool, flinchless: bool, disable_hitlag: bool, direct: bool, ground_air: i32, hitbits: i32, collision_part: i32, friendly_fire: bool, effect: Hash40, sfx_level: i32, collision_sound: i32, _type: i32) {
@@ -83,7 +83,7 @@ pub unsafe fn ATTACK_IGNORE_THROW<A: ToF32, B: ToF32, C: ToF32>(agent: &mut L2CA
     sv_animcmd::ATTACK_IGNORE_THROW(agent.lua_state_agent);
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_POWER<F: ToF32>(agent: &mut L2CAgentBase, id: u64, power: F) {
     agent.clear_lua_stack();
     lua_args!(agent, id, power.to_f32());
@@ -91,7 +91,7 @@ pub unsafe fn ATK_POWER<F: ToF32>(agent: &mut L2CAgentBase, id: u64, power: F) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATTACK_FP<A: ToF32, B: ToF32, C: ToF32, D: ToF32>(agent: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, damage: f32, angle: u64, kbg: D, fkb: i32, bkb: i32, size: C, x: f32, y: f32, z: f32,
                     effect: Hash40, trip: f32, hitlag: f32, sdi: f32, clang: bool, rebound: bool, shield_damage: A, sfx_level: i32, collision_sound: i32, ground_air: i32, direct: bool, _type: i32, hitbits: i32, unk1: bool,
                     collision_part: i32, unk2: bool, blockable: bool, reflectable: bool, absorbable: bool, rehit: B, ignore_invuln: bool, unk3: bool, facing: i32, unk4: bool, friendly_fire: bool, disable_hitlag: bool,
@@ -104,7 +104,7 @@ pub unsafe fn ATTACK_FP<A: ToF32, B: ToF32, C: ToF32, D: ToF32>(agent: &mut L2CA
     sv_animcmd::ATTACK_FP(agent.lua_state_agent);
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATTACK_ABS(agent: &mut L2CAgentBase, kind: i32, id: u64, damage: f32, angle: u64, kbg: i32, fkb: i32, bkb: i32, hitlag: f32,
                         unk: f32, facing: i32, unk2: f32, unk3: bool, effect: Hash40, sfx_level: i32, sfx_type: i32, _type: i32) {
     agent.clear_lua_stack();
@@ -112,14 +112,14 @@ pub unsafe fn ATTACK_ABS(agent: &mut L2CAgentBase, kind: i32, id: u64, damage: f
     sv_animcmd::ATTACK_ABS(agent.lua_state_agent);
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_HIT_ABS(agent: &mut L2CAgentBase, kind: i32, unk: Hash40, target: u64, target_group: u64, target_no: u64) {
     agent.clear_lua_stack();
     lua_args!(agent, kind, unk, target, target_group, target_no);
     sv_animcmd::ATK_HIT_ABS(agent.lua_state_agent);
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn is_excute(agent: &mut L2CAgentBase) -> bool {
     agent.clear_lua_stack();
     sv_animcmd::is_excute(agent.lua_state_agent);
@@ -127,14 +127,14 @@ pub unsafe fn is_excute(agent: &mut L2CAgentBase) -> bool {
     ret
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn IS_EXIST_ARTICLE(agent: &mut L2CAgentBase, article: i32) -> bool {
     agent.clear_lua_stack();
     lua_args!(agent, article);
     sv_animcmd::IS_EXIST_ARTICLE(agent.lua_state_agent)
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CATCH(agent: &mut L2CAgentBase, id: i32, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>, status: i32, situation: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, id, bone, size, x, y, z);
@@ -145,7 +145,7 @@ pub unsafe fn CATCH(agent: &mut L2CAgentBase, id: i32, bone: Hash40, size: f32, 
     sv_animcmd::CATCH(agent.lua_state_agent);
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_CATCH_STOP<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, unk1: A, unk2: B) {
     agent.clear_lua_stack();
     lua_args!(agent, unk1.to_f32(), unk2.to_f32());
@@ -153,7 +153,7 @@ pub unsafe fn FT_CATCH_STOP<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, unk1: 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_DESIRED_RATE(agent: &mut L2CAgentBase, motion_frames: f32, game_frames: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, (game_frames / motion_frames));
@@ -161,7 +161,7 @@ pub unsafe fn FT_DESIRED_RATE(agent: &mut L2CAgentBase, motion_frames: f32, game
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_MOTION_RATE_RANGE(agent: &mut L2CAgentBase, motion_start_frame: f32, motion_end_frame: f32, game_frames: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, (game_frames / (motion_end_frame - motion_start_frame)));
@@ -169,7 +169,7 @@ pub unsafe fn FT_MOTION_RATE_RANGE(agent: &mut L2CAgentBase, motion_start_frame:
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_MOTION_RATE<F: ToF32>(agent: &mut L2CAgentBase, rate: F) {
     agent.clear_lua_stack();
     lua_args!(agent, rate.to_f32());
@@ -177,7 +177,7 @@ pub unsafe fn FT_MOTION_RATE<F: ToF32>(agent: &mut L2CAgentBase, rate: F) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW<A: ToF32, B: ToF32, C: ToF32>(agent: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C) {
     agent.clear_lua_stack();
     lua_args!(agent, unk1.to_f32(), unk2.to_f32(), unk3.to_f32());
@@ -185,7 +185,7 @@ pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW<A: ToF32, B: ToF32, C: ToF32>(
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW_arg5<A: ToF32, B: ToF32, C: ToF32>(agent: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: Hash40, unk5: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4, unk5);
@@ -193,21 +193,21 @@ pub unsafe fn FT_SHOOTING_ATTACK_GROUND_CHECK_NEW_arg5<A: ToF32, B: ToF32, C: To
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_START_CUTIN(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::FT_START_CUTIN(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn START_INFO_FLASH_EYE(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::START_INFO_FLASH_EYE(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_LEAVE_NEAR_OTTOTTO<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, unk1: A, unk2: B) {
     agent.clear_lua_stack();
     lua_args!(agent, unk1.to_f32(), unk2.to_f32());
@@ -215,7 +215,7 @@ pub unsafe fn FT_LEAVE_NEAR_OTTOTTO<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(agent: &mut L2CAgentBase, arg: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, arg);
@@ -223,7 +223,7 @@ pub unsafe fn FT_START_ADJUST_MOTION_FRAME_arg1(agent: &mut L2CAgentBase, arg: f
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT<F: ToF32>(agent: &mut L2CAgentBase, offset: F) {
     agent.clear_lua_stack();
     lua_args!(agent, offset.to_f32());
@@ -231,7 +231,7 @@ pub unsafe fn LAST_EFFECT_SET_OFFSET_TO_CAMERA_FLAT<F: ToF32>(agent: &mut L2CAge
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CHECK_VALID_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32>(agent: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: bool) {
     agent.clear_lua_stack();
     lua_args!(agent, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32(), unk7);
@@ -239,7 +239,7 @@ pub unsafe fn CHECK_VALID_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CHECK_VALID_FINAL_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32>(agent: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F) {
     agent.clear_lua_stack();
     lua_args!(agent, unk1.to_f32(), unk2.to_f32(), unk3.to_f32(), unk4.to_f32(), unk5.to_f32(), unk6.to_f32());
@@ -247,7 +247,7 @@ pub unsafe fn CHECK_VALID_FINAL_START_CAMERA<A: ToF32, B: ToF32, C: ToF32, D: To
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn REQ_MOTION_CAMERA(agent: &mut L2CAgentBase, camera: Hash40, unk: bool) {
     agent.clear_lua_stack();
     lua_args!(agent, camera, unk);
@@ -255,7 +255,7 @@ pub unsafe fn REQ_MOTION_CAMERA(agent: &mut L2CAgentBase, camera: Hash40, unk: b
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn REQ_FINAL_START_CAMERA(agent: &mut L2CAgentBase, camera: Hash40, unk: bool) {
     agent.clear_lua_stack();
     lua_args!(agent, camera, unk);
@@ -263,7 +263,7 @@ pub unsafe fn REQ_FINAL_START_CAMERA(agent: &mut L2CAgentBase, camera: Hash40, u
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn REQ_FINAL_START_CAMERA_arg3(agent: &mut L2CAgentBase, camera: Hash40, unk: bool, unk2: bool) {
     agent.clear_lua_stack();
     lua_args!(agent, camera, unk, unk2);
@@ -271,7 +271,7 @@ pub unsafe fn REQ_FINAL_START_CAMERA_arg3(agent: &mut L2CAgentBase, camera: Hash
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn IS_GENERATABLE_ARTICLE(agent: &mut L2CAgentBase, article: i32) -> bool {
     agent.clear_lua_stack();
     lua_args!(agent, article);
@@ -280,7 +280,7 @@ pub unsafe fn IS_GENERATABLE_ARTICLE(agent: &mut L2CAgentBase, article: i32) -> 
     ret
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn SET_RATE_ARTICLE<A: ToF32>(agent: &mut L2CAgentBase, article: i32, rate: A) {
     agent.clear_lua_stack();
     lua_args!(agent, article, rate.to_f32());
@@ -289,7 +289,7 @@ pub unsafe fn SET_RATE_ARTICLE<A: ToF32>(agent: &mut L2CAgentBase, article: i32,
     ret
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CAM_ZOOM_IN_arg5(agent: &mut L2CAgentBase, zoom_amount: f32, arg2: f32, arg3: f32, y_rot: f32, x_rot: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, zoom_amount, arg2, arg3, y_rot, x_rot);
@@ -297,7 +297,7 @@ pub unsafe fn CAM_ZOOM_IN_arg5(agent: &mut L2CAgentBase, zoom_amount: f32, arg2:
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CAM_ZOOM_IN_arg6(agent: &mut L2CAgentBase, arg1: f32, arg2: f32, arg3: f32, arg4: f32, arg5: f32, arg6: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, arg1, arg2, arg3, arg4, arg5, arg6);
@@ -305,7 +305,7 @@ pub unsafe fn CAM_ZOOM_IN_arg6(agent: &mut L2CAgentBase, arg1: f32, arg2: f32, a
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn HIT_NO(agent: &mut L2CAgentBase, num: u64, status: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, num, status);
@@ -313,7 +313,7 @@ pub unsafe fn HIT_NO(agent: &mut L2CAgentBase, num: u64, status: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn HIT_NODE(agent: &mut L2CAgentBase, bone: Hash40, status: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, bone, status);
@@ -321,14 +321,14 @@ pub unsafe fn HIT_NODE(agent: &mut L2CAgentBase, bone: Hash40, status: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn HIT_RESET_ALL(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::HIT_RESET_ALL(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg3 <A: ToF32> (agent: &mut L2CAgentBase, unk: u64, unk2: A, unk3: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, unk, unk2.to_f32(), unk3);
@@ -336,7 +336,7 @@ pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg3 <A: ToF32> (agent: &mut L2CAgentBas
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_LERP_RATIO <A: ToF32> (agent: &mut L2CAgentBase, ratio: A) {
     agent.clear_lua_stack();
     lua_args!(agent, ratio.to_f32());
@@ -344,7 +344,7 @@ pub unsafe fn ATK_LERP_RATIO <A: ToF32> (agent: &mut L2CAgentBase, ratio: A) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn QUAKE(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, kind);
@@ -352,7 +352,7 @@ pub unsafe fn QUAKE(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_ATTACK_ABS_CAMERA_QUAKE(agent: &mut L2CAgentBase, attack_abs_kind: i32, quake_kind: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, attack_abs_kind, quake_kind);
@@ -360,7 +360,7 @@ pub unsafe fn FT_ATTACK_ABS_CAMERA_QUAKE(agent: &mut L2CAgentBase, attack_abs_ki
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn SET_SPEED_EX<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, speed_x: A, speed_y: B, kinetic_kind: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, speed_x.to_f32(), speed_y.to_f32(), kinetic_kind);
@@ -368,7 +368,7 @@ pub unsafe fn SET_SPEED_EX<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, speed_x
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn SLOW_OPPONENT(agent: &mut L2CAgentBase, slow_mul: f32, slow_time: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, slow_mul, slow_time);
@@ -376,7 +376,7 @@ pub unsafe fn SLOW_OPPONENT(agent: &mut L2CAgentBase, slow_mul: f32, slow_time: 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_SET_FINAL_FEAR_FACE(agent: &mut L2CAgentBase, unk: u64) {
     agent.clear_lua_stack();
     lua_args!(agent, unk);
@@ -384,21 +384,21 @@ pub unsafe fn FT_SET_FINAL_FEAR_FACE(agent: &mut L2CAgentBase, unk: u64) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CAM_ZOOM_OUT(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::CAM_ZOOM_OUT(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CAM_ZOOM_OUT_FINAL(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::CAM_ZOOM_OUT_FINAL(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CAM_ZOOM_IN_FINAL_arg13(agent: &mut L2CAgentBase, x: f32, y: f32, z: f32, unk1: i32, unk2: i32, unk3: i32, unk4: i32, unk5: i32, unk6: bool, object_id: u32, unk7: i32, unk8: i32, unk9: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, x, y, z, unk1, unk2, unk3, unk4, unk5, unk6, object_id, unk7 ,unk8, unk9);
@@ -406,7 +406,7 @@ pub unsafe fn CAM_ZOOM_IN_FINAL_arg13(agent: &mut L2CAgentBase, x: f32, y: f32, 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL<A: ToF32>(agent: &mut L2CAgentBase, id: u64, val: A) {
     agent.clear_lua_stack();
     lua_args!(agent, id, val.to_f32());
@@ -414,7 +414,7 @@ pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL<A: ToF32>(agent: &mut L2CAgentBase, id: 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL2<A: ToF32>(agent: &mut L2CAgentBase, id: u64, val: A) {
     agent.clear_lua_stack();
     lua_args!(agent, id, val.to_f32());
@@ -422,7 +422,7 @@ pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL2<A: ToF32>(agent: &mut L2CAgentBase, id:
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg5(agent: &mut L2CAgentBase, unk: u64, unk2: u64, unk3: u64, unk4: u64, unk5: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, unk, unk2, unk3, unk4, unk5);
@@ -430,7 +430,7 @@ pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg5(agent: &mut L2CAgentBase, unk: u64,
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg4(agent: &mut L2CAgentBase, unk: u64, unk2: u64, unk3: u64, unk4: f32) {
     agent.clear_lua_stack();
     lua_args!(agent, unk, unk2, unk3, unk4);
@@ -438,7 +438,7 @@ pub unsafe fn ATK_SET_SHIELD_SETOFF_MUL_arg4(agent: &mut L2CAgentBase, unk: u64,
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn WHOLE_HIT(agent: &mut L2CAgentBase, hit_status: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, hit_status);
@@ -446,7 +446,7 @@ pub unsafe fn WHOLE_HIT(agent: &mut L2CAgentBase, hit_status: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FLASH<
     A: ToF32,
     B: ToF32,
@@ -459,7 +459,7 @@ pub unsafe fn FLASH<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FLASH_FRM<
     A: ToF32,
     B: ToF32,
@@ -473,7 +473,7 @@ pub unsafe fn FLASH_FRM<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW<
     A: ToF32,
     B: ToF32,
@@ -489,7 +489,7 @@ pub unsafe fn EFFECT_FOLLOW<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_RND<
     A: ToF32,
     B: ToF32,
@@ -507,12 +507,12 @@ pub unsafe fn EFFECT_FOLLOW_RND<
     >(agent: &mut L2CAgentBase, effect: Hash40, bone: Hash40, x_pos: A, y_pos: B, z_pos: C, x_rot: D, y_rot: E, z_rot: F, size: G, x_pos_range: H, y_pos_range: I,
     z_pos_range: J, x_rot_range: K, y_rot_range: L, z_rot_range: M, unk8: bool) {
     agent.clear_lua_stack();
-    lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), unk8);
+    lua_args!(agent, effect, bone, x_pos.to_f32(), y_pos.to_f32(), z_pos.to_f32(), x_rot.to_f32(), y_rot.to_f32(), z_rot.to_f32(), size.to_f32(), x_pos_range.to_f32(), y_pos_range.to_f32(), z_pos_range.to_f32(), x_rot_range.to_f32(), y_rot_range.to_f32(), z_rot_range.to_f32(), unk8);
     sv_animcmd::EFFECT_FOLLOW_RND(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_WORK<
     A: ToF32,
     B: ToF32,
@@ -529,7 +529,7 @@ pub unsafe fn EFFECT_FOLLOW_WORK<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_RND_WORK<
     A: ToF32,
     B: ToF32,
@@ -569,7 +569,7 @@ pub unsafe fn EFFECT_FOLLOW_arg11<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FLW_POS<
     A: ToF32,
     B: ToF32,
@@ -585,7 +585,7 @@ pub unsafe fn EFFECT_FLW_POS<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FLW_UNSYNC_VIS<
     A: ToF32,
     B: ToF32,
@@ -601,7 +601,7 @@ pub unsafe fn EFFECT_FLW_UNSYNC_VIS<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LANDING_EFFECT<
     A: ToF32,
     B: ToF32,
@@ -624,7 +624,7 @@ pub unsafe fn LANDING_EFFECT<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LANDING_EFFECT_FLIP<
     A: ToF32,
     B: ToF32,
@@ -647,7 +647,7 @@ pub unsafe fn LANDING_EFFECT_FLIP<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LAST_EFFECT_SET_ALPHA<F: ToF32>(agent: &mut L2CAgentBase, alpha: F) {
     agent.clear_lua_stack();
     lua_args!(agent, alpha.to_f32());
@@ -655,7 +655,7 @@ pub unsafe fn LAST_EFFECT_SET_ALPHA<F: ToF32>(agent: &mut L2CAgentBase, alpha: F
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LAST_EFFECT_SET_SCALE_W<A: ToF32, B: ToF32, C: ToF32>(agent: &mut L2CAgentBase, x: A, y: B, z: C) {
     agent.clear_lua_stack();
     lua_args!(agent, x.to_f32(), y.to_f32(), z.to_f32());
@@ -663,7 +663,7 @@ pub unsafe fn LAST_EFFECT_SET_SCALE_W<A: ToF32, B: ToF32, C: ToF32>(agent: &mut 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FOOT_EFFECT<
     A: ToF32,
     B: ToF32,
@@ -686,7 +686,7 @@ pub unsafe fn FOOT_EFFECT<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT<
     A: ToF32,
     B: ToF32,
@@ -709,7 +709,7 @@ pub unsafe fn EFFECT<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_WORK<
     A: ToF32,
     B: ToF32,
@@ -733,7 +733,7 @@ pub unsafe fn EFFECT_WORK<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FLIP<
     A: ToF32,
     B: ToF32,
@@ -755,7 +755,7 @@ pub unsafe fn EFFECT_FLIP<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_ALPHA<
     A: ToF32,
     B: ToF32,
@@ -779,7 +779,7 @@ pub unsafe fn EFFECT_ALPHA<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FLIP_ALPHA<
     A: ToF32,
     B: ToF32,
@@ -803,7 +803,7 @@ pub unsafe fn EFFECT_FLIP_ALPHA<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_ALPHA<
     A: ToF32,
     B: ToF32,
@@ -820,7 +820,7 @@ pub unsafe fn EFFECT_FOLLOW_ALPHA<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_FLIP<
     A: ToF32,
     B: ToF32,
@@ -836,7 +836,7 @@ pub unsafe fn EFFECT_FOLLOW_FLIP<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_FLIP_ALPHA<
     A: ToF32,
     B: ToF32,
@@ -855,7 +855,7 @@ pub unsafe fn EFFECT_FOLLOW_FLIP_ALPHA<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ENABLE_AREA(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, kind);
@@ -863,7 +863,7 @@ pub unsafe fn ENABLE_AREA(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn UNABLE_AREA(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, kind);
@@ -871,7 +871,7 @@ pub unsafe fn UNABLE_AREA(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn SET_SEARCH_SIZE_EXIST<A: ToF32>(agent: &mut L2CAgentBase, id: u64, size: A) {
     agent.clear_lua_stack();
     lua_args!(agent, id, size.to_f32());
@@ -879,7 +879,7 @@ pub unsafe fn SET_SEARCH_SIZE_EXIST<A: ToF32>(agent: &mut L2CAgentBase, id: u64,
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LAST_PARTICLE_SET_COLOR<
     A: ToF32,
     B: ToF32,
@@ -891,7 +891,7 @@ pub unsafe fn LAST_PARTICLE_SET_COLOR<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LAST_EFFECT_SET_COLOR<
     A: ToF32,
     B: ToF32,
@@ -903,7 +903,7 @@ pub unsafe fn LAST_EFFECT_SET_COLOR<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn BURN_COLOR<
     A: ToF32,
     B: ToF32,
@@ -916,7 +916,7 @@ pub unsafe fn BURN_COLOR<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn BURN_COLOR_FRAME<
     A: ToF32,
     B: ToF32,
@@ -930,14 +930,14 @@ pub unsafe fn BURN_COLOR_FRAME<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn BURN_COLOR_NORMAL(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::BURN_COLOR_NORMAL(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn LAST_EFFECT_SET_RATE<F: ToF32>(agent: &mut L2CAgentBase, rate: F) {
     agent.clear_lua_stack();
     lua_args!(agent, rate.to_f32());
@@ -945,7 +945,7 @@ pub unsafe fn LAST_EFFECT_SET_RATE<F: ToF32>(agent: &mut L2CAgentBase, rate: F) 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_OFF_KIND(agent: &mut L2CAgentBase, effect: Hash40, unk: bool, unk2: bool) {
     agent.clear_lua_stack();
     lua_args!(agent, effect, unk, unk2);
@@ -953,7 +953,7 @@ pub unsafe fn EFFECT_OFF_KIND(agent: &mut L2CAgentBase, effect: Hash40, unk: boo
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_OFF_KIND_WORK(agent: &mut L2CAgentBase, effect_const: i32, unk: bool, unk2: bool) {
     let effect = lua_bind::WorkModule::get_int64(agent.module_accessor, effect_const);
     agent.clear_lua_stack();
@@ -962,14 +962,14 @@ pub unsafe fn EFFECT_OFF_KIND_WORK(agent: &mut L2CAgentBase, effect_const: i32, 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn COL_NORMAL(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::COL_NORMAL(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FILL_SCREEN_MODEL_COLOR<
     A: ToF32,
     B: ToF32,
@@ -988,7 +988,7 @@ pub unsafe fn FILL_SCREEN_MODEL_COLOR<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CANCEL_FILL_SCREEN<
     A: ToF32,
 >(agent: &mut L2CAgentBase, unk1: i32, unk2: A) {
@@ -998,7 +998,7 @@ pub unsafe fn CANCEL_FILL_SCREEN<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn SA_SET(agent: &mut L2CAgentBase, unk: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, unk);
@@ -1006,7 +1006,7 @@ pub unsafe fn SA_SET(agent: &mut L2CAgentBase, unk: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CHECK_FINISH_CAMERA<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, unk: A, unk2: B) {
     agent.clear_lua_stack();
     lua_args!(agent, unk.to_f32(), unk2.to_f32());
@@ -1014,7 +1014,7 @@ pub unsafe fn CHECK_FINISH_CAMERA<A: ToF32, B: ToF32>(agent: &mut L2CAgentBase, 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se);
@@ -1022,7 +1022,7 @@ pub unsafe fn PLAY_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_STATUS(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se);
@@ -1030,7 +1030,7 @@ pub unsafe fn PLAY_STATUS(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_LANDING_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se);
@@ -1038,7 +1038,7 @@ pub unsafe fn PLAY_LANDING_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_SE_NO_3D(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se);
@@ -1046,7 +1046,7 @@ pub unsafe fn PLAY_SE_NO_3D(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_SE_REMAIN(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se);
@@ -1054,7 +1054,7 @@ pub unsafe fn PLAY_SE_REMAIN(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_DOWN_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se);
@@ -1062,7 +1062,7 @@ pub unsafe fn PLAY_DOWN_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_FLY_VOICE(agent: &mut L2CAgentBase, se1: Hash40, se2: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se1, se2);
@@ -1070,7 +1070,7 @@ pub unsafe fn PLAY_FLY_VOICE(agent: &mut L2CAgentBase, se1: Hash40, se2: Hash40)
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn STOP_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, se);
@@ -1078,7 +1078,7 @@ pub unsafe fn STOP_SE(agent: &mut L2CAgentBase, se: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_STEP(agent: &mut L2CAgentBase, step: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, step);
@@ -1086,7 +1086,7 @@ pub unsafe fn PLAY_STEP(agent: &mut L2CAgentBase, step: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_STEP_FLIPPABLE(agent: &mut L2CAgentBase, step: Hash40, step2: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, step, step2);
@@ -1094,7 +1094,7 @@ pub unsafe fn PLAY_STEP_FLIPPABLE(agent: &mut L2CAgentBase, step: Hash40, step2:
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn PLAY_SEQUENCE(agent: &mut L2CAgentBase, sequence: Hash40) {
     agent.clear_lua_stack();
     lua_args!(agent, sequence);
@@ -1102,7 +1102,7 @@ pub unsafe fn PLAY_SEQUENCE(agent: &mut L2CAgentBase, sequence: Hash40) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn SET_PLAY_INHIVIT<A: ToF32>(agent: &mut L2CAgentBase, se: Hash40, unk: A) {
     agent.clear_lua_stack();
     lua_args!(agent, se, unk.to_f32());
@@ -1110,7 +1110,7 @@ pub unsafe fn SET_PLAY_INHIVIT<A: ToF32>(agent: &mut L2CAgentBase, se: Hash40, u
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn AFTER_IMAGE_OFF<F: ToF32>(agent: &mut L2CAgentBase, unk: F) {
     agent.clear_lua_stack();
     lua_args!(agent, unk.to_f32());
@@ -1118,7 +1118,7 @@ pub unsafe fn AFTER_IMAGE_OFF<F: ToF32>(agent: &mut L2CAgentBase, unk: F) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn AFTER_IMAGE4_ON_arg29<
     A: ToF32,
     B: ToF32,
@@ -1144,7 +1144,7 @@ pub unsafe fn AFTER_IMAGE4_ON_arg29<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn AFTER_IMAGE4_ON_WORK_arg29(agent: &mut L2CAgentBase, trail1: i32, trail2: i32, trail_length: u64, trail_bone1: Hash40, trail_x1: f32, trail_y1: f32,
         trail_z1: f32, trail_bone2: Hash40, trail_x2: f32, trail_y2: f32, trail_z2: f32, unk10: bool, flare: i32, flare_bone: Hash40, flare_x: f32, flare_y: f32,
         flare_z: f32, flare_x_rot: f32, flare_y_rot: f32, flare_z_rot: f32, flare_size: f32, unk13: u64, axis: i32, unk15: u64, trail_blend: i32,
@@ -1156,7 +1156,7 @@ pub unsafe fn AFTER_IMAGE4_ON_WORK_arg29(agent: &mut L2CAgentBase, trail1: i32, 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_NO_STOP<
     A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32 , G: ToF32
     >(agent: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: bool) {
@@ -1166,7 +1166,7 @@ pub unsafe fn EFFECT_FOLLOW_NO_STOP<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FOLLOW_NO_STOP_FLIP<
     A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32, G: ToF32
     >(agent: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: Hash40, unk2: A, unk3: B, unk4: C, unk5: D, unk6: E, unk7: F, unk8: G, unk9: bool, axis: i32) {
@@ -1176,7 +1176,7 @@ pub unsafe fn EFFECT_FOLLOW_NO_STOP_FLIP<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_FLW_POS_NO_STOP(agent: &mut L2CAgentBase, effect: Hash40, bone: Hash40, unk: u64, unk2: u64, unk3: u64, unk4: u64, unk5: u64, unk6: u64, unk7: u64, unk8: bool) {
     agent.clear_lua_stack();
     lua_args!(agent, effect, bone, unk, unk2, unk3, unk4, unk5, unk6, unk7, unk8);
@@ -1184,7 +1184,7 @@ pub unsafe fn EFFECT_FLW_POS_NO_STOP(agent: &mut L2CAgentBase, effect: Hash40, b
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn COL_PRI(agent: &mut L2CAgentBase, pri: u64) {
     agent.clear_lua_stack();
     lua_args!(agent, pri);
@@ -1192,7 +1192,7 @@ pub unsafe fn COL_PRI(agent: &mut L2CAgentBase, pri: u64) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn AREA_WIND_2ND_RAD<
     A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32, G: ToF32, H: ToF32
     >(agent: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H) {
@@ -1202,7 +1202,7 @@ pub unsafe fn AREA_WIND_2ND_RAD<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn AREA_WIND_2ND_RAD_arg9<
     A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32, G: ToF32, H: ToF32, I: ToF32
     >(agent: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I) {
@@ -1212,7 +1212,7 @@ pub unsafe fn AREA_WIND_2ND_RAD_arg9<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn AREA_WIND_2ND_arg10<
     A: ToF32, B: ToF32, C: ToF32, D: ToF32, E: ToF32, F: ToF32, G: ToF32, H: ToF32, I: ToF32, J: ToF32
     >(agent: &mut L2CAgentBase, unk1: A, unk2: B, unk3: C, unk4: D, unk5: E, unk6: F, unk7: G, unk8: H, unk9: I, unk10: J) {
@@ -1222,7 +1222,7 @@ pub unsafe fn AREA_WIND_2ND_arg10<
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn FT_ADD_DAMAGE<F: ToF32>(agent: &mut L2CAgentBase, damage: F) {
     agent.clear_lua_stack();
     lua_args!(agent, damage.to_f32());
@@ -1230,7 +1230,7 @@ pub unsafe fn FT_ADD_DAMAGE<F: ToF32>(agent: &mut L2CAgentBase, damage: F) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn CORRECT(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, kind);
@@ -1238,7 +1238,7 @@ pub unsafe fn CORRECT(agent: &mut L2CAgentBase, kind: i32) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn RUMBLE_HIT(agent: &mut L2CAgentBase, kind: Hash40, unk: u64) {
     agent.clear_lua_stack();
     lua_args!(agent, kind, unk);
@@ -1246,7 +1246,7 @@ pub unsafe fn RUMBLE_HIT(agent: &mut L2CAgentBase, kind: Hash40, unk: u64) {
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_DETACH_KIND(agent: &mut L2CAgentBase, effect: Hash40, unk: i64) {
     agent.clear_lua_stack();
     lua_args!(agent, effect, unk);
@@ -1254,7 +1254,7 @@ pub unsafe fn EFFECT_DETACH_KIND(agent: &mut L2CAgentBase, effect: Hash40, unk: 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn EFFECT_DETACH_KIND_WORK(agent: &mut L2CAgentBase, effect_const: i32, unk: i64) {
     let effect = lua_bind::WorkModule::get_int64(agent.module_accessor, effect_const);
     agent.clear_lua_stack();
@@ -1263,14 +1263,14 @@ pub unsafe fn EFFECT_DETACH_KIND_WORK(agent: &mut L2CAgentBase, effect_const: i3
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn REVERSE_LR(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::REVERSE_LR(agent.lua_state_agent);
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn SEARCH(agent: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40, size: f32, x: f32, y: f32, z: f32, x2: Option<f32>, y2: Option<f32>, z2: Option<f32>,
     collision: i32, hit_status: i32, unk: u64, ground_air: i32, collision_category: i32, collision_parts: i32, unk2: bool) {
     agent.clear_lua_stack();
@@ -1283,7 +1283,7 @@ pub unsafe fn SEARCH(agent: &mut L2CAgentBase, id: u64, part: u64, bone: Hash40,
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn ADD_SPEED_NO_LIMIT<X: ToF32, Y: ToF32>(agent: &mut L2CAgentBase, x_speed: X, y_speed: Y) {
     agent.clear_lua_stack();
     lua_args!(agent, x_speed.to_f32(), y_speed.to_f32());
@@ -1291,7 +1291,7 @@ pub unsafe fn ADD_SPEED_NO_LIMIT<X: ToF32, Y: ToF32>(agent: &mut L2CAgentBase, x
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn THROW_ITEM_arg3(agent: &mut L2CAgentBase, angle: i32, speed: i32, power: i32) {
     agent.clear_lua_stack();
     lua_args!(agent, angle, speed, power);
@@ -1299,7 +1299,7 @@ pub unsafe fn THROW_ITEM_arg3(agent: &mut L2CAgentBase, angle: i32, speed: i32, 
     agent.clear_lua_stack();
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn game_CaptureCutCommon(agent: &mut L2CAgentBase) {
     if is_excute(agent) {
         agent.clear_lua_stack();
@@ -1309,7 +1309,7 @@ pub unsafe fn game_CaptureCutCommon(agent: &mut L2CAgentBase) {
     }
 }
 
-#[inline]
+#[inline(never)]
 pub unsafe fn wait_loop_clear(agent: &mut L2CAgentBase) {
     agent.clear_lua_stack();
     sv_animcmd::wait_loop_clear(agent.lua_state_agent);
